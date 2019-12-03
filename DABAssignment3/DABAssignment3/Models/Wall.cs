@@ -12,7 +12,6 @@ namespace DABAssignment3.Models
         public Wall(ObjectId WallId, User user)
         {
             this.WallId = WallId;
-            Users = user.UserID;
         }
         [BsonId]
         public ObjectId WallId { get; set; }

@@ -11,24 +11,40 @@ namespace DABAssignment3.Models
     public class User
     {
         [BsonConstructor]
-        public User(ObjectId UserID, string name, int age, string gender, Group group)
+        public User(string name, int age, string gender)
         {
-            this.UserID = UserID;
             Name = Name;
             Age = age;
             Gender = gender;
-            Groups = group.GroupId;
+            PostId = new List<string>();
+            SubscriberId = new List<string>();
+            BlockedUserId = new List<string>();
+            CircleId = new List<string>();
         }
 
         [BsonId]
-        public ObjectId UserID { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId UserId { get; set; }
+
         [BsonElement("Name")]
         public string Name { get; set; }
+
         [BsonElement("Age")]
         public int Age { get; set; }
+
         [BsonElement("Gender")]
         public string Gender { get; set; }
-        [BsonElement("Many")]
-        public List<ObjectId> Groups { get; set; }
+
+        [BsonElement("PostId")]
+        public List<string> PostId { get; set; }
+
+        [BsonElement("SubscriberId")]
+        public List<string> SubscriberId { get; set; }
+
+        [BsonElement("BlockedUser")]
+        public List<string> BlockedUserId { get; set; }
+
+        [BsonElement("CircleId")]
+        public List<string> CircleId { get; set; }
     }
 }
