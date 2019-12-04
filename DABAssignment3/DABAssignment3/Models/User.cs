@@ -38,13 +38,20 @@ namespace DABAssignment3.Models
         [BsonElement("PostId")]
         public List<string> PostId { get; set; }
 
+        [BsonElement("CircleId")]
+        public List<string> CircleId { get; set; }
+
         [BsonElement("SubscriberId")]
         public List<string> SubscriberId { get; set; }
 
         [BsonElement("BlockedUser")]
         public List<string> BlockedUserId { get; set; }
 
-        [BsonElement("CircleId")]
-        public List<string> CircleId { get; set; }
+        //[BsonElement("Wall")]
+        //public List<string> Wall { get; set; }
+
+        //[BsonElement("Feed")]
+        //public List<string> Feed { get; set; }
+
     }
 }

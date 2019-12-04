@@ -11,7 +11,7 @@ namespace DABAssignment3.Models
 {
     public class Circle
     {
-        public Circle(string name, string ownerId)
+        public Circle(string name)
         {
             UserId = new List<string>();
             PostId = new List<string>();
