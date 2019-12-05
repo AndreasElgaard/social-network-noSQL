@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace DABAssignment3.Controllers.Response
 {
-    public class UserResponse
+    public class CommentResponse
     {
-        public string Name { get; set; }
+        public string Text { get; set; }
 
-        public int Age { get; set; }
+        public string PostId { get; set; }
 
-        public string Gender { get; set; }
+        public string UserId { get; set; }
     }
 }

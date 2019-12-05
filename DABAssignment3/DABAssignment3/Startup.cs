@@ -8,10 +8,12 @@ using DABAssignment3.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 
 namespace DABAssignment3
 {
@@ -37,6 +39,10 @@ namespace DABAssignment3
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<ICommentService, CommentService>();
             services.AddControllersWithViews();
+
+            services.AddControllers();
+
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "DabApi", Version = "v1"}); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,19 +58,22 @@ namespace DABAssignment3
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
 
-            app.UseRouting();
+            app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "DabApi");
+                c.RoutePrefix = string.Empty;
             });
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

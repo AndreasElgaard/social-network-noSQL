@@ -26,37 +26,62 @@ namespace DABAssignment3.Controllers
         }
         // GET: api/Circle
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<CircleRequest>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var circle = _CircleService.GetAll();
+
+            if (circle == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<List<CircleResponse>>(circle));
         }
 
         // GET: api/Circle/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public ActionResult<CircleResponse> Get(string id)
         {
-            return "value";
+            var circle = _CircleService.Get(id);
+
+            if (circle == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<CircleResponse>(circle));
         }
 
         // POST: api/Circle
         [HttpPost]
-        public IActionResult Post([FromBody] CircleRequest name)
+        [HttpPost]
+        public IActionResult Post([FromBody] CircleRequest request)
         {
-            var circle = _mapper.Map<Circle>(name);
+            var circle = _mapper.Map<Circle>(request);
+
             var result = _CircleService.Create(circle);
+
             return Ok(_mapper.Map<CircleResponse>(result));
         }
 
         // PUT: api/Circle/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(string id, [FromBody] CircleRequest request)
         {
+            var circle = _mapper.Map<Circle>(request);
+
+            _CircleService.Update(id, circle);
+
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(string id)
         {
+            _CircleService.Remove(id);
+
+            return Ok();
         }
     }
 }
