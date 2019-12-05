@@ -11,6 +11,13 @@ namespace DABAssignment3.Models
 {
     public class Circle
     {
+        [BsonConstructor]
+        public Circle()
+        {
+
+        }
+
+
         public Circle(string name)
         {
             UserId = new List<string>();
