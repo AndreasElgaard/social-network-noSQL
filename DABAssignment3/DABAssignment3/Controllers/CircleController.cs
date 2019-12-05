@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DABAssignment3.Controllers.Request;
 using DABAssignment3.Controllers.Response;
+using DABAssignment3.Models;
 using DABAssignment3.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +17,12 @@ namespace DABAssignment3.Controllers
     public class CircleController : ControllerBase
     {
         private readonly ICircleService _CircleService;
+        private readonly IMapper _mapper;
 
-        public CircleController(CircleService circleService)
+        public CircleController(CircleService circleService, IMapper mapper)
         {
             _CircleService = circleService;
+            _mapper = mapper;
         }
         // GET: api/Circle
         [HttpGet]
@@ -36,9 +40,11 @@ namespace DABAssignment3.Controllers
 
         // POST: api/Circle
         [HttpPost]
-        public IActionResult<CircleResponse> Post([FromBody] CircleRequest name)
+        public IActionResult Post([FromBody] CircleRequest name)
         {
-            _CircleService.Create(name);
+            var circle = _mapper.Map<Circle>(name);
+            var result = _CircleService.Create(circle);
+            return Ok(_mapper.Map<CircleResponse>(result));
         }
 
         // PUT: api/Circle/5
