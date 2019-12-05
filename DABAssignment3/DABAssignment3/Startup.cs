@@ -32,6 +32,10 @@ namespace DABAssignment3
             services.AddSingleton<ISocialnetworkDBsettings>(sp =>
                 sp.GetRequiredService<IOptions<SocialnetworkDBsettings>>().Value);
 
+            services.AddSingleton<ICircleService, CircleService>();
+            services.AddSingleton<IPostService, PostService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<ICommentService, CommentService>();
             services.AddControllersWithViews();
         }
 

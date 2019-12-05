@@ -27,7 +27,7 @@ namespace DABAssignment3.Models
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string CircleId { get; set; }
+        public ObjectId CircleId { get; set; }
 
         [BsonElement("Name")]
         public string Name { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
+using DABAssignment3.Models.SocialnetworkSettings;
 using MongoDB.Driver;
 
 namespace DABAssignment3.Services
@@ -11,12 +12,12 @@ namespace DABAssignment3.Services
     {
         private readonly IMongoCollection<Post> _posts;
 
-        public PostService()
+        public PostService(ISocialnetworkDBsettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _posts = database.GetCollection<Post>(settings.BooksCollectionName);
+            _posts = database.GetCollection<Post>(settings.PostCollectionName);
 
         }
 
