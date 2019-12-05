@@ -10,6 +10,12 @@ namespace DABAssignment3.Models
     public class Post
     {
         [BsonConstructor]
+        public Post()
+        {
+
+        }
+
+        [BsonConstructor]
         public Post(string img, string text, bool ispublic, string circleid, string userid)
         {
             IMG = img;

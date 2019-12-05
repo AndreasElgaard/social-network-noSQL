@@ -2,12 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DABAssignment3.Models;
+using DABAssignment3.Models.SocialnetworkSettings;
+using DABAssignment3.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace DABAssignment3
 {
@@ -23,6 +27,11 @@ namespace DABAssignment3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<SocialnetworkDBsettings>(Configuration.GetSection(nameof(SocialnetworkDBsettings)));
+
+            services.AddSingleton<ISocialnetworkDBsettings>(sp =>
+                sp.GetRequiredService<IOptions<SocialnetworkDBsettings>>().Value);
+
             services.AddControllersWithViews();
         }
 
