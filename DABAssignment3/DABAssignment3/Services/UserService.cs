@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
+using MongoDB.Driver;
 
 namespace DABAssignment3.Services
 {
     public class UserService : IUserService
     {
+        private readonly IMongoCollection<User> _user;
+
+        public UserService()
+
         public List<User> GetAll()
         {
             throw new NotImplementedException();
