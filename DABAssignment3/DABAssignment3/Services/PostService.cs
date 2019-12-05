@@ -24,7 +24,7 @@ namespace DABAssignment3.Services
             _posts.Find(post => true).ToList();
 
         public Post Get(string Id) =>
-            _posts.Find<Post>(post => post.PostId == Id).FirstOrDefault();
+            _posts.Find<Post>(post => post.PostId.ToString() == Id).FirstOrDefault();
 
         public Post Create(Post Post)
         {
@@ -33,12 +33,12 @@ namespace DABAssignment3.Services
         }
 
         public void Update(string id, Post Post) =>
-            _posts.ReplaceOne(post => post.PostId.ToString == id, Post);
+            _posts.ReplaceOne(post => post.PostId.ToString() == id, Post);
 
         public void Remove(Post Post) =>
             _posts.DeleteOne(post => post.PostId == Post.PostId);
 
         public void Remove(string id) =>
-            _posts.DeleteOne(post => post.PostId == id);
+            _posts.DeleteOne(post => post.PostId.ToString() == id);
     }
 }
