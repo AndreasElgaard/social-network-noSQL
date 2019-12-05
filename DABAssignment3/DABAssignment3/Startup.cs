@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
+using DABAssignment3.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,7 +26,6 @@ namespace DABAssignment3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // requires using Microsoft.Extensions.Options
             //User
             services.Configure<User>(Configuration.GetSection(nameof(User)));
             services.AddSingleton<User>(sp => sp.GetRequiredService<IOptions<User>>().Value);
@@ -46,7 +46,7 @@ namespace DABAssignment3
             services.AddSingleton<Comment>(sp => sp.GetRequiredService<IOptions<Comment>>().Value);
             services.AddSingleton<CommentService>();
 
-            services.AddControllersWithViews().AddNewtonsoftJson(options => options.UseMemberCasing()); ;
+            services.AddControllersWithViews();//.AddNewtonsoftJson(options => options.UseMemberCasing()); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
