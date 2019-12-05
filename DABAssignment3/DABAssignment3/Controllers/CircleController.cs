@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DABAssignment3.Controllers.Request;
+using DABAssignment3.Controllers.Response;
+using DABAssignment3.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +14,12 @@ namespace DABAssignment3.Controllers
     [ApiController]
     public class CircleController : ControllerBase
     {
+        private readonly ICircleService _CircleService;
 
+        public CircleController(CircleService circleService)
+        {
+            _CircleService = circleService;
+        }
         // GET: api/Circle
         [HttpGet]
         public IEnumerable<string> Get()
@@ -28,8 +36,9 @@ namespace DABAssignment3.Controllers
 
         // POST: api/Circle
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult<CircleResponse> Post([FromBody] CircleRequest name)
         {
+            _CircleService.Create(name);
         }
 
         // PUT: api/Circle/5
