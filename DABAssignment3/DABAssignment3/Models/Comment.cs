@@ -24,7 +24,7 @@ namespace DABAssignment3.Models
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string CommentId { get; set; }
+        public ObjectId CommentId { get; set; }
 
         [BsonElement("Text")]
         public string Text { get; set; }

@@ -3,39 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
+using MongoDB.Driver;
 
 namespace DABAssignment3.Services
 {
     public class CommentService : ICommentService
     {
+        private readonly IMongoCollection<Comment> _comment;
+        public BookService(Comment settings)
+        {
+            var client = new MongoClient(settings.ConnectionString);
+            var database = client.GetDatabase(settings.DatabaseName);
+
+            _comment = database.GetCollection<Comment>(settings.BooksCollectionName);
+        }
         public List<Comment> GetAll()
         {
-            throw new NotImplementedException();
+            return _comment.Find(book => true).ToList();
         }
 
         public Comment Get(string Id)
         {
-            throw new NotImplementedException();
+            return _comment.Find<Comment>(comment => comment.CommentId.ToString() == Id).FirstOrDefault();
         }
 
         public Comment Create(Comment Comment)
         {
-            throw new NotImplementedException();
+            _comment.InsertOne(Comment);
+            return Comment;
         }
 
         public void Update(string id, Comment Comment)
         {
-            throw new NotImplementedException();
+            _comment.ReplaceOne(comment => comment.CommentId.ToString() == id, Comment);
         }
 
         public void Remove(Comment Comment)
         {
-            throw new NotImplementedException();
+            _comment.DeleteOne(comment=> comment.CommentId == Comment.CommentId);
         }
 
         public void Remove(string id)
         {
-            throw new NotImplementedException();
+            _comment.DeleteOne(comment => comment.CommentId.ToString() == id);
         }
     }
 }
