@@ -11,6 +11,11 @@ namespace DABAssignment3.Models
     public class User
     {
         [BsonConstructor]
+        public User()
+        {
+
+        }
+        [BsonConstructor]
         public User(string name, int age, string gender)
         {
             Name = Name;

@@ -9,6 +9,12 @@ namespace DABAssignment3.Models
 {
     public class Comment
     {
+        [BsonConstructor]
+        public Comment()
+        {
+
+        }
+
         public Comment(string text, string postid, string userid)
         {
             PostId = postid;

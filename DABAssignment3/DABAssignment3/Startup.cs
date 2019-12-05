@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DABAssignment3.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace DABAssignment3
 {
@@ -23,7 +25,28 @@ namespace DABAssignment3
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            // requires using Microsoft.Extensions.Options
+            //User
+            services.Configure<User>(Configuration.GetSection(nameof(User)));
+            services.AddSingleton<User>(sp => sp.GetRequiredService<IOptions<User>>().Value);
+            services.AddSingleton<UserService>();
+
+            //Post
+            services.Configure<Post>(Configuration.GetSection(nameof(Post)));
+            services.AddSingleton<Post>(sp => sp.GetRequiredService<IOptions<Post>>().Value);
+            services.AddSingleton<PostService>();
+
+            //Circle
+            services.Configure<Circle>(Configuration.GetSection(nameof(Circle)));
+            services.AddSingleton<Circle>(sp => sp.GetRequiredService<IOptions<Circle>>().Value);
+            services.AddSingleton<CircleService>();
+
+            //Comment
+            services.Configure<Comment>(Configuration.GetSection(nameof(Comment)));
+            services.AddSingleton<Comment>(sp => sp.GetRequiredService<IOptions<Comment>>().Value);
+            services.AddSingleton<CommentService>();
+
+            services.AddControllersWithViews().AddNewtonsoftJson(options => options.UseMemberCasing()); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
