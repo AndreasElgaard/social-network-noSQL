@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
+using MongoDB.Driver;
 
 namespace DABAssignment3.Services
 {
     public class PostService : IPostService
     {
+        private readonly IMongoCollection<Post> _posts;
+        PostService()
+        {
+            var client = new MongoClient("\"mongodb://localhost:27017\"");
+        }
         public List<Post> GetAll()
         {
             throw new NotImplementedException();
