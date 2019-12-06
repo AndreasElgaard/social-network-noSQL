@@ -79,6 +79,6 @@ namespace DABAssignment3
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
 
-        public void
+        
     }
 }

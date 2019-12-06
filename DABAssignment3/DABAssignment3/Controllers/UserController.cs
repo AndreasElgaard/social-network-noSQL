@@ -145,5 +145,63 @@ namespace DABAssignment3.Controllers
 
             return
         }
+
+        //Post all sample data
+        [HttpPost("Post Sample Data")]
+        public IActionResult PostSampleData()
+        {
+            User u1 = new User("Mads Jørgensen", 12, "Female");
+            User u2 = new User("Mathias Pedersen", 17,"Male");
+            User u3 = new User("Andres Ellegaard Sørensen", 22, "Male");
+            User u4 = new User("Mark Højer Hansen", 23, "Male");
+            User u5 = new User("Bjarne Benjaminsen Vølund", 28,"Female");
+
+            Circle circle1 = new Circle("ørken");
+            Circle circle2 = new Circle("CS:GO");
+            Circle circle3 = new Circle("LOL");
+
+            _circleService.Create(circle1);
+            _circleService.Create(circle2);
+            _circleService.Create(circle3);
+
+            u1.CircleId.Add(circle1.CircleId.ToString());
+            u2.CircleId.Add(circle1.CircleId.ToString());
+            u3.CircleId.Add(circle1.CircleId.ToString());
+            u4.CircleId.Add(circle1.CircleId.ToString());
+            u1.CircleId.Add(circle2.CircleId.ToString());
+            u2.CircleId.Add(circle2.CircleId.ToString());
+            u4.CircleId.Add(circle2.CircleId.ToString());
+            u5.CircleId.Add(circle2.CircleId.ToString());
+            u1.CircleId.Add(circle3.CircleId.ToString());
+            u2.CircleId.Add(circle3.CircleId.ToString());
+            u3.CircleId.Add(circle3.CircleId.ToString());
+
+            _userservice.Create(u1);
+            _userservice.Create(u2);
+            _userservice.Create(u3);
+            _userservice.Create(u4);
+            _userservice.Create(u5);
+
+            circle1.UserId.Add(u1.UserId.ToString());
+            circle1.UserId.Add(u2.UserId.ToString());
+            circle1.UserId.Add(u3.UserId.ToString());
+            circle1.UserId.Add(u4.UserId.ToString());
+            circle2.UserId.Add(u1.UserId.ToString());
+            circle2.UserId.Add(u2.UserId.ToString());
+            circle2.UserId.Add(u5.UserId.ToString());
+            circle2.UserId.Add(u4.UserId.ToString());
+            circle3.UserId.Add(u1.UserId.ToString());
+            circle3.UserId.Add(u2.UserId.ToString());
+            circle3.UserId.Add(u3.UserId.ToString());
+            circle3.UserId.Add(u5.UserId.ToString());
+
+            _circleService.Update(circle1.CircleId.ToString(),circle1);
+            _circleService.Update(circle2.CircleId.ToString(), circle2);
+            _circleService.Update(circle3.CircleId.ToString(), circle3);
+
+
+
+            return Ok();
+        }
     }
 }
