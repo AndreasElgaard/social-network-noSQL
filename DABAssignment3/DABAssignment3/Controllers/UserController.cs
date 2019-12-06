@@ -220,7 +220,40 @@ namespace DABAssignment3.Controllers
             _circleService.Update(circle2.CircleId.ToString(), circle2);
             _circleService.Update(circle3.CircleId.ToString(), circle3);
 
+            Post post1 = new Post("","Hold da op, man får slupret noget energidrik i sig under sådan en aflevering", 
+                false, circle1.CircleId.ToString(),u1.UserId.ToString());
+            Post post2 = new Post("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.bonnier.cloud%2Ffiles%2Fill%2Fproduction%2F2014%2F05%2F07104857%2Fdesert3.jpg%3Fauto%3Dcompress%26fm%3Dpjpg%26fit%3Dmax%26fp-x%3D0.5%26fp-y%3D0.5%26w%3D1920%26ixlib%3Djs-1.2.0&f=1&nofb=1", 
+                "Ude godt, hjemme bedst", false, circle1.CircleId.ToString(), u4.UserId.ToString());
+            Post post3 = new Post("", "Er kongen i top", 
+                false, circle3.CircleId.ToString(), u3.UserId.ToString());
+            Post post4 = new Post("", "ez game, især mod mads", 
+                false, circle2.CircleId.ToString(), u2.UserId.ToString());
+            Post post5 = new Post("https://tinyurl.com/vyj7l8v", "",
+                false, circle3.CircleId.ToString(), u5.UserId.ToString());
 
+            Comment c1 = new Comment("Gå hjem",post1.PostId.ToString(),u2.UserId.ToString());
+            Comment c2 = new Comment("Savner det", post2.PostId.ToString(), u1.UserId.ToString());
+            Comment c3 = new Comment("Nej, det er jo mig", post3.PostId.ToString(), u5.UserId.ToString());
+            Comment c4 = new Comment("Ikke fair, du blev carried", post4.PostId.ToString(), u1.UserId.ToString());
+            Comment c5 = new Comment("Du er så ringe", post5.PostId.ToString(), u5.UserId.ToString());
+            Comment c6 = new Comment("Det har bare at være monster", post1.PostId.ToString(), u4.UserId.ToString());
+
+            post1.CommentId.Add(c1.CommentId.ToString());
+            post2.CommentId.Add(c2.CommentId.ToString());
+            post3.CommentId.Add(c3.CommentId.ToString());
+            post4.CommentId.Add(c4.CommentId.ToString());
+            post5.CommentId.Add(c5.CommentId.ToString());
+            post1.CommentId.Add(c6.CommentId.ToString());
+
+            circle1.PostId.Add(post1.PostId.ToString());
+            circle1.PostId.Add(post2.PostId.ToString());
+            circle3.PostId.Add(post3.PostId.ToString());
+            circle2.PostId.Add(post4.PostId.ToString());
+            circle3.PostId.Add(post5.PostId.ToString());
+
+            _circleService.Update(circle1.CircleId.ToString(),circle1);
+            _circleService.Update(circle2.CircleId.ToString(), circle2);
+            _circleService.Update(circle3.CircleId.ToString(), circle3);
 
             return Ok();
         }
