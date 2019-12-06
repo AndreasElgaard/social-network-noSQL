@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DABAssignment3.Controllers.Request;
 using DABAssignment3.Controllers.Response;
 using DABAssignment3.Models;
@@ -16,10 +17,12 @@ namespace DABAssignment3.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userservice;
+        private readonly IMapper _mapper;
 
-        public UserController(UserService userService)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userservice = userService;
+            _mapper = mapper;
         }
         // GET: api/User
         [HttpGet]
@@ -37,9 +40,11 @@ namespace DABAssignment3.Controllers
 
         // POST: api/User
         [HttpPost]
-        public IActionResult<UserResponse> Post([FromBody] UserRequest request)
+        public IActionResult Post([FromBody] UserRequest request)
         {
-            _userservice.Create(request);
+            var user = _mapper.Map<User>(request);
+            var result = _userservice.Create(user);
+            return Ok(_mapper.Map<UserResponse>(result));
         }
 
         // PUT: api/User/5

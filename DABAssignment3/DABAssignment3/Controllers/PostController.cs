@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using DABAssignment3.Models;
 using DABAssignment3.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +15,12 @@ namespace DABAssignment3.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostService _postservice;
+        private readonly IMapper _mapper;
 
-        public PostController(PostService postService)
+        public PostController(IPostService postService, IMapper mapper)
         {
             _postservice = postService;
+            _mapper = mapper;
         }
         // GET: api/Post
         [HttpGet]
@@ -34,9 +38,11 @@ namespace DABAssignment3.Controllers
 
         // POST: api/Post
         [HttpPost]
-        public IActionResult<PostResponse> Post([FromBody] PostRequest request)
+        public IActionResult Post([FromBody] PostRequest request)
         {
-            _postservice.Create(request);
+            var post = _mapper.Map<Post>(request);
+            var result = _postservice.Create(post);
+            return Ok(_mapper.Map<PostResponse>(result));
         }
 
         // PUT: api/Post/5
