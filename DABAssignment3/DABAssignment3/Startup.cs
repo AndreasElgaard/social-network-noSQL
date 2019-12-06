@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
 
 namespace DABAssignment3
 {
@@ -40,6 +41,8 @@ namespace DABAssignment3
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<ICommentService, CommentService>();
             services.AddControllersWithViews();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddControllers();
 
