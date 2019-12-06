@@ -10,6 +10,7 @@ using DABAssignment3.Models.Dto;
 using DABAssignment3.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace DABAssignment3.Controllers
 {
@@ -19,13 +20,15 @@ namespace DABAssignment3.Controllers
     {
         private readonly IUserService _userservice;
         private readonly ICircleService _circleService;
+        private readonly IPostService _postService;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, IMapper mapper, ICircleService circleService)
+        public UserController(IUserService userService, IMapper mapper, ICircleService circleService, IPostService postService)
         {
             _userservice = userService;
             _mapper = mapper;
             _circleService = circleService;
+            _postService = postService;
         }
         // GET: api/User
         [HttpGet]
@@ -130,20 +133,38 @@ namespace DABAssignment3.Controllers
 
             if (userwall.BlockedUserId.Contains(guest.UserId.ToString()))
             {
-                return 
+                return BadRequest(new {Message = "This User has you blocked: " + userwall.Name});
             }
 
-            foreach (var circle in userwall.CircleId)
+            foreach (var circleIds in userwall.CircleId)
             {
+                var circle = _circleService.Get(circleIds);
 
+                if (circle.UserId.Contains(guest.UserId.ToString()))
+                {
+                    foreach (var postId in circle.PostId)
+                    {
+                        var post = _postService.Get(postId);
+
+                        if (post.UserId == userwall.UserId.ToString())
+                        {
+                            wall.Responses.Add(_mapper.Map<PostResponse>(post));
+                        }
+                    }
+                }
             }
 
+            foreach (var postId in userwall.PostId)
+            {
+                var post = _postService.Get(postId);
 
-
-
-
-
-            return
+                if (post.Public)
+                {
+                    wall.Responses.Add(_mapper.Map<PostResponse>(post));
+                }
+            }
+            
+            return Ok(wall);
         }
 
         [HttpGet]
