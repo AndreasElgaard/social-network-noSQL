@@ -17,5 +17,9 @@ namespace DABAssignment3.Services
 
         void Remove(Circle circle);
         void Remove(string id);
+
+        void AddUserToCircle(string userId, string CircleId);
+        void RemoveUserFromCicrle(string userId, string circleId);
+
     }
 }

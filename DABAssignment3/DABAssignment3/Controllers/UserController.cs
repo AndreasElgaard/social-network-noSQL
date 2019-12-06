@@ -82,5 +82,21 @@ namespace DABAssignment3.Controllers
 
             return Ok();
         }
+
+        [HttpPut]
+        public IActionResult SubscribeToUser(string userId, string subscribeName)
+        {
+            var result =_userservice.SubsribeToUser(userId, subscribeName);
+
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public IActionResult BlockUser(string userId, string blockId)
+        {
+            var result = _userservice.BlockUser(userId, blockId);
+
+            return Ok(result);
+        }
     }
 }
