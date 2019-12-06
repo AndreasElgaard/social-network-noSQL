@@ -18,7 +18,6 @@ namespace DABAssignment3.Services
             var database = client.GetDatabase(settings.DatabaseName);
 
             _posts = database.GetCollection<Post>(settings.PostCollectionName);
-
         }
         public List<Post> GetAll() =>
             _posts.Find(post => true).ToList();
