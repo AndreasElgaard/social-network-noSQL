@@ -40,5 +40,23 @@ namespace DABAssignment3.Services
 
         public void Remove(string id) =>
             _circles.DeleteOne(circle => circle.CircleId.ToString() == id);
+
+        public void AddUserToCircle(string userId, string CircleId)
+        {
+           var result = _circles.Find(s => s.CircleId.ToString() == CircleId).SingleOrDefault();
+
+           result.UserId.Add(userId);
+
+           Update(CircleId, result);
+        }
+
+        public void RemoveUserFromCicrle(string userId, string circleId)
+        {
+            var result = _circles.Find(s => s.CircleId.ToString() == circleId).SingleOrDefault();
+
+            result.UserId.Remove(userId);
+
+            Update(circleId, result);
+        }
     }
 }

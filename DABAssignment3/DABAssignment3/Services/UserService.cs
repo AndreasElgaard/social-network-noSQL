@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
+using DABAssignment3.Models.Dto;
 using DABAssignment3.Models.SocialnetworkSettings;
 using MongoDB.Driver;
 
@@ -17,6 +19,7 @@ namespace DABAssignment3.Services
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
+
             _users = database.GetCollection<User>(settings.UserCollectionName);
 
         }
@@ -26,6 +29,10 @@ namespace DABAssignment3.Services
 
         public User Get(string Id) =>
             _users.Find<User>(User => User.UserId.ToString() == Id).FirstOrDefault();
+
+        public User FindByName(string Name) =>
+            _users.Find(user => user.Name == Name).SingleOrDefault();
+        
 
         public User Create(User User)
         {
@@ -42,9 +49,50 @@ namespace DABAssignment3.Services
         public void Remove(string id) =>
             _users.DeleteOne(User => User.UserId.ToString() == id);
 
-        public List<Post> Feed(string user)
+        public WallResponse GetWall(User User)
         {
-            List<Post> _feed = new List<Post>();
+
+            var result = _users.FindSync(user => user.UserId == User.UserId).SingleOrDefault();
+
+            var wall = new WallResponse();
+
+            foreach (var circle in result.CircleId)
+            {
+                var groups = 
+            }
+
+
+
+
+
+
+            return 
         }
+
+        public string SubsribeToUser(string UserName, string subscribeName)
+        {
+            var user = FindByName(UserName);
+            var subscribe = FindByName(subscribeName);
+
+            user.SubscriberId.Add(subscribe.UserId.ToString());
+
+            Update(user.UserId.ToString(), user);
+
+            return "User Added To Subscriber list: " + subscribe.Name;
+        }
+
+        public string BlockUser(string UserName, string BlockUser)
+        {
+            var user = FindByName(UserName);
+            var blocked = FindByName(BlockUser);
+
+            user.BlockedUserId.Add(blocked.UserId.ToString());
+
+            Update(user.UserId.ToString(), user);
+
+            return "User Blocked: " + blocked.Name;
+        }
+
+        public string UnSubscribeToUser()
     }
 }

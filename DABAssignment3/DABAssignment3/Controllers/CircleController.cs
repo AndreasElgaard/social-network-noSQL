@@ -83,5 +83,22 @@ namespace DABAssignment3.Controllers
 
             return Ok();
         }
+
+        // DELETE: api/RemoveUser
+        [HttpDelete]
+        public IActionResult RemoveUser(string userId, string circleId)
+        {
+            _CircleService.RemoveUserFromCicrle(userId, circleId);
+
+            return Ok();
+        }
+
+        [HttpPut]
+        public IActionResult AddUser(string userId, string circleId)
+        {
+            _CircleService.AddUserToCircle(userId, circleId);
+
+            return Ok();
+        }
     }
 }
