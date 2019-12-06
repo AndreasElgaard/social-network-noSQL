@@ -18,7 +18,7 @@ namespace DABAssignment3.Models
         [BsonConstructor]
         public User(string name, int age, string gender)
         {
-            Name = Name;
+            Name = name;
             Age = age;
             Gender = gender;
             PostId = new List<string>();
