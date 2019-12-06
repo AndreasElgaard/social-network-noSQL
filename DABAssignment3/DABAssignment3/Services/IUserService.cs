@@ -26,6 +26,5 @@ namespace DABAssignment3.Services
         string UnSubsribeToUser(string UserName, string subscribeName);
         string UnBlockUser(string UserName, string BlockUser);
 
-        WallResponse GetWall(User User);
     }
 }

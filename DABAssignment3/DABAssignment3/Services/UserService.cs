@@ -49,26 +49,6 @@ namespace DABAssignment3.Services
         public void Remove(string id) =>
             _users.DeleteOne(User => User.UserId.ToString() == id);
 
-        public WallResponse GetWall(string Userid, string guestId)
-        {
-
-            var result = Get(Userid);
-
-            var wall = new WallResponse();
-
-            foreach (var circle in result.CircleId)
-            {
-                var groups = 
-            }
-
-
-
-
-
-
-            return 
-        }
-
         public string SubsribeToUser(string UserName, string subscribeName)
         {
             var user = FindByName(UserName);
