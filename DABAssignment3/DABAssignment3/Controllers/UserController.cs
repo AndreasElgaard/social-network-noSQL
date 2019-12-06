@@ -89,7 +89,7 @@ namespace DABAssignment3.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("Subscribe")]
         public IActionResult SubscribeToUser(string userId, string subscribeName)
         {
             var result =_userservice.SubsribeToUser(userId, subscribeName);
@@ -97,7 +97,7 @@ namespace DABAssignment3.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPut("Block")]
         public IActionResult BlockUser(string userId, string blockId)
         {
             var result = _userservice.BlockUser(userId, blockId);
@@ -105,7 +105,7 @@ namespace DABAssignment3.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPut("UnSubscriber")]
         public IActionResult UnSubscribeToUser(string userId, string subscribeName)
         {
             var result = _userservice.UnSubsribeToUser(userId, subscribeName);
@@ -113,7 +113,7 @@ namespace DABAssignment3.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPut("UnblockUser")]
         public IActionResult UnBlockUser(string userId, string blockId)
         {
             var result = _userservice.UnBlockUser(userId, blockId);
@@ -121,7 +121,7 @@ namespace DABAssignment3.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpGet("Wall")]
         public IActionResult Wall(string UserId, string GuestId)
         {
 
