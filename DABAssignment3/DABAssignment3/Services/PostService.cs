@@ -17,7 +17,7 @@ namespace DABAssignment3.Services
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _posts = database.GetCollection<Post>(settings.PostCollectionName);
+           // _posts = database.GetCollection<Post>(settings.PostCollectionName);
         }
         public List<Post> GetAll() =>
             _posts.Find(post => true).ToList();
