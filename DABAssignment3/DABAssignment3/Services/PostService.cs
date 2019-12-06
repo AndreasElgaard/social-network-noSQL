@@ -19,7 +19,6 @@ namespace DABAssignment3.Services
 
             _posts = database.GetCollection<Post>(settings.PostCollectionName);
         }
-
         public List<Post> GetAll() =>
             _posts.Find(post => true).ToList();
 
