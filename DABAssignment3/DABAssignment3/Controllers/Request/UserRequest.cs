@@ -7,6 +7,10 @@ namespace DABAssignment3.Controllers.Request
 {
     public class UserRequest
     {
-        public string name;
+        public string Name { get; set; }
+
+        public int Age { get; set; }
+
+        public string Gender { get; set; }
     }
 }

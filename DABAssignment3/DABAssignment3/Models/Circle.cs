@@ -37,6 +37,5 @@ namespace DABAssignment3.Models
 
         [BsonElement("UserId")]
         public List<string> UserId { get; set; }
-
     }
 }

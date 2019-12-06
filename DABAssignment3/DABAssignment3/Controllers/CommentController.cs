@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using DABAssignment3.Controllers.Request;
+using DABAssignment3.Controllers.Response;
+using DABAssignment3.Models;
 using DABAssignment3.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -23,34 +26,61 @@ namespace DABAssignment3.Controllers
         }
         // GET: api/Comment
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<CommentResponse>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var comment = _commentService.GetAll();
+
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<List<CommentResponse>>(comment));
         }
 
         // GET: api/Comment/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public ActionResult<CommentResponse> Get(string id)
         {
-            return "value";
+            var comment = _commentService.Get(id);
+
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<CommentResponse>(comment));
         }
 
         // POST: api/Comment
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] CommentRequest request)
         {
+            var comment = _mapper.Map<Comment>(request);
+
+            var result = _commentService.Create(comment);
+
+            return Ok(_mapper.Map<CommentResponse>(result));
         }
 
         // PUT: api/Comment/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(string id, [FromBody] CommentRequest request)
         {
+            var comment = _mapper.Map<Comment>(request);
+
+            _commentService.Update(id, comment);
+
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(string id)
         {
+            _commentService.Remove(id);
+
+            return Ok();
         }
     }
 }

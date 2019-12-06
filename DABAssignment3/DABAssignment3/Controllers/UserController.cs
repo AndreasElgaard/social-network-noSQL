@@ -26,37 +26,61 @@ namespace DABAssignment3.Controllers
         }
         // GET: api/User
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<UserResponse>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var user = _userservice.GetAll();
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<List<UserResponse>>(user));
         }
 
         // GET: api/User/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public ActionResult<UserResponse> Get(string id)
         {
-            return "value";
+            var user = _userservice.Get(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<UserResponse>(user));
         }
 
         // POST: api/User
-        [HttpPost]
+        [HttpPost("Post")]
         public IActionResult Post([FromBody] UserRequest request)
         {
             var user = _mapper.Map<User>(request);
+
             var result = _userservice.Create(user);
-            return Ok(_mapper.Map<UserResponse>(result));
+
+            return Ok(_mapper.Map<UserResponse>(user));
         }
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(string id, [FromBody] UserRequest request)
         {
+            var user = _mapper.Map<User>(request);
+
+            _userservice.Update(id, user);
+
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(string id)
         {
+            _userservice.Remove(id);
+
+            return Ok();
         }
     }
 }
