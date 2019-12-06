@@ -17,7 +17,6 @@ namespace DABAssignment3.Services
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
-
             _users = database.GetCollection<User>(settings.UserCollectionName);
 
         }
@@ -42,5 +41,10 @@ namespace DABAssignment3.Services
 
         public void Remove(string id) =>
             _users.DeleteOne(User => User.UserId.ToString() == id);
+
+        public List<Post> Feed(string user)
+        {
+            List<Post> _feed = new List<Post>();
+        }
     }
 }
