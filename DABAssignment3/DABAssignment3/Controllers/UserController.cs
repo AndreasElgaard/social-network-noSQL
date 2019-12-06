@@ -73,16 +73,9 @@ namespace DABAssignment3.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(string id, [FromBody] UserRequest request)
         {
-            //var user = _mapper.Map<User>(request);
+            var user = _mapper.Map<User>(request);
 
-            var result = new User
-            {
-                Name = request.Name,
-                Age = request.Age,
-                Gender = request.Gender
-            };
-
-            _userservice.Update(id, result);
+            _userservice.Update(id, user);
 
             return Ok();
         }
