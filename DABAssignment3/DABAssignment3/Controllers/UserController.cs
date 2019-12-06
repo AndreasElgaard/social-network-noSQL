@@ -145,5 +145,29 @@ namespace DABAssignment3.Controllers
 
             return
         }
+
+        [HttpGet]
+        public IActionResult Feed(string userid)
+        {
+            var _feed = new FeedResponse();
+            var user = _userservice.FindByName(userid);
+
+            //Find all subscribers and show their posts on feed wall
+            foreach (var subscriber in user.SubscriberId)
+            {
+                var provider = _userservice.Get(user.UserId.ToString());
+                if (provider.BlockedUserId.Contains(user.UserId.ToString()))
+                {
+                    continue;
+                }
+
+                var circle = _circleService.Get(subscriber);
+                var subscriberid = user.SubscriberId;
+                for (int i = 0; i < 6; i++)
+                {
+                    _feed
+                }
+            }
+        }
     }
 }
