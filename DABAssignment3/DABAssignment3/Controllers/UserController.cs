@@ -219,7 +219,7 @@ namespace DABAssignment3.Controllers
             _circleService.Update(circle1.CircleId.ToString(),circle1);
             _circleService.Update(circle2.CircleId.ToString(), circle2);
             _circleService.Update(circle3.CircleId.ToString(), circle3);
-
+            
             Post post1 = new Post("","Hold da op, man får slupret noget energidrik i sig under sådan en aflevering", 
                 false, circle1.CircleId.ToString(),u1.UserId.ToString());
             Post post2 = new Post("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.bonnier.cloud%2Ffiles%2Fill%2Fproduction%2F2014%2F05%2F07104857%2Fdesert3.jpg%3Fauto%3Dcompress%26fm%3Dpjpg%26fit%3Dmax%26fp-x%3D0.5%26fp-y%3D0.5%26w%3D1920%26ixlib%3Djs-1.2.0&f=1&nofb=1", 
