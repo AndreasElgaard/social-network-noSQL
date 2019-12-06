@@ -6,6 +6,7 @@ using AutoMapper;
 using DABAssignment3.Controllers.Request;
 using DABAssignment3.Controllers.Response;
 using DABAssignment3.Models;
+using DABAssignment3.Models.Dto;
 using DABAssignment3.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,14 @@ namespace DABAssignment3.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userservice;
+        private readonly ICircleService _circleService;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper, ICircleService circleService)
         {
             _userservice = userService;
             _mapper = mapper;
+            _circleService = circleService;
         }
         // GET: api/User
         [HttpGet]
@@ -97,6 +100,50 @@ namespace DABAssignment3.Controllers
             var result = _userservice.BlockUser(userId, blockId);
 
             return Ok(result);
+        }
+
+        [HttpPut]
+        public IActionResult UnSubscribeToUser(string userId, string subscribeName)
+        {
+            var result = _userservice.UnSubsribeToUser(userId, subscribeName);
+
+            return Ok(result);
+        }
+
+        [HttpPut]
+        public IActionResult UnBlockUser(string userId, string blockId)
+        {
+            var result = _userservice.UnBlockUser(userId, blockId);
+
+            return Ok(result);
+        }
+
+        [HttpGet]
+        public IActionResult Wall(string UserId, string GuestId)
+        {
+
+            var userwall = _userservice.Get(UserId);
+
+            var guest = _userservice.Get(GuestId);
+
+            var wall = new WallResponse();
+
+            if (userwall.BlockedUserId.Contains(guest.UserId.ToString()))
+            {
+                return 
+            }
+
+            foreach (var circle in userwall.CircleId)
+            {
+
+            }
+
+
+
+
+
+
+            return
         }
     }
 }

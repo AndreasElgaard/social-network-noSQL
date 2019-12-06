@@ -49,26 +49,6 @@ namespace DABAssignment3.Services
         public void Remove(string id) =>
             _users.DeleteOne(User => User.UserId.ToString() == id);
 
-        public WallResponse GetWall(User User)
-        {
-
-            var result = _users.FindSync(user => user.UserId == User.UserId).SingleOrDefault();
-
-            var wall = new WallResponse();
-
-            foreach (var circle in result.CircleId)
-            {
-                var groups = 
-            }
-
-
-
-
-
-
-            return 
-        }
-
         public string SubsribeToUser(string UserName, string subscribeName)
         {
             var user = FindByName(UserName);
@@ -93,6 +73,28 @@ namespace DABAssignment3.Services
             return "User Blocked: " + blocked.Name;
         }
 
-        public string UnSubscribeToUser()
+        public string UnSubsribeToUser(string UserName, string subscribeName)
+        {
+            var user = FindByName(UserName);
+            var subscribe = FindByName(subscribeName);
+
+            user.SubscriberId.Remove(subscribe.UserId.ToString());
+
+            Update(user.UserId.ToString(), user);
+
+            return "UnSubscribered to User: " + subscribe.Name;
+        }
+
+        public string UnBlockUser(string UserName, string BlockUser)
+        {
+            var user = FindByName(UserName);
+            var blocked = FindByName(BlockUser);
+
+            user.BlockedUserId.Remove(blocked.UserId.ToString());
+
+            Update(user.UserId.ToString(), user);
+
+            return "User UnBlocked: " + blocked.Name;
+        }
     }
 }

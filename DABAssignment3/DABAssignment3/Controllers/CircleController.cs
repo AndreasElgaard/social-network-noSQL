@@ -54,7 +54,6 @@ namespace DABAssignment3.Controllers
 
         // POST: api/Circle
         [HttpPost]
-        [HttpPost]
         public IActionResult Post([FromBody] CircleRequest request)
         {
             var circle = _mapper.Map<Circle>(request);
