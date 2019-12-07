@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
 using DABAssignment3.Controllers.Request;
@@ -165,6 +166,68 @@ namespace DABAssignment3.Controllers
             }
             
             return Ok(wall);
+        }
+
+        [HttpGet]
+        public IActionResult Feed(string userid)
+        {
+            var _feed = new FeedResponse();
+            var userFeed = _userservice.FindByName(userid);
+
+            //if user does not exits 
+            if (userFeed == null)
+            {
+                return BadRequest(new {message = "UserId does not exist"});
+            }
+
+
+            //Find all subscribers and show their posts on feed wall
+            foreach (var subscriber in userFeed.SubscriberId)
+            {
+                var provider = _userservice.Get(userFeed.UserId.ToString());
+                if (provider.BlockedUserId.Contains(userFeed.BlockedUserId.ToString()))
+                {
+                    return BadRequest(new { Message = "User has blocked your: " + userFeed.Name });
+                }
+
+                var subPublic = _circleService.Get(subscriber);
+                var subscriberid = userFeed.SubscriberId;
+                for (int i = 0; i < 6; i++)
+                {
+                    //_feed.FeedResponses.Add(subPublic.PostId[subPublic.PostId.Count - i]);
+                    _feed.FeedResponses.Add(_mapper.Map<PostResponse>(subPublic));
+                }
+            }
+
+            //Find all circles and print posts
+            foreach (var CircleIds in userFeed.CircleId)
+            {
+                var privateCircle = _circleService.Get(CircleIds);
+                if (privateCircle.PostId.Count > 0)
+                {
+                    int count = privateCircle.PostId.Count - 1;
+                    for (int i = 0; i < count;i++)
+                    {
+                        //_feed.FeedResponses.Add(privateCircle.PostId[i]);
+                        _feed.FeedResponses.Add(_mapper.Map<PostResponse>(privateCircle));
+
+                    }
+                }
+
+            }
+
+            //own public posts 
+            foreach (var postId in userFeed.PostId)
+            {
+                var post = _postService.Get(postId);
+
+                if (post.Public)
+                {
+                    _feed.FeedResponses.Add(_mapper.Map<PostResponse>(post));
+                }
+            }
+
+            return Ok(_feed);
         }
 
         //Post all sample data
