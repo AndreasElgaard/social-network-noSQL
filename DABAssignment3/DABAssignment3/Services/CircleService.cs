@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
 using DABAssignment3.Models.SocialnetworkSettings;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DABAssignment3.Services
@@ -23,8 +24,8 @@ namespace DABAssignment3.Services
         public List<Circle> GetAll() =>
             _circles.Find(circle => true).ToList();
 
-        public Circle Get(string Id) =>
-            _circles.Find<Circle>(circle => circle.CircleId.ToString() == Id).FirstOrDefault();
+        public Circle Get(ObjectId Id) =>
+            _circles.Find<Circle>(circle => circle.CircleId == Id).FirstOrDefault();
 
         public Circle Create(Circle circle)
         {
@@ -32,27 +33,27 @@ namespace DABAssignment3.Services
             return circle;
         }
 
-        public void Update(string id, Circle circle) =>
-            _circles.ReplaceOne(circle => circle.CircleId.ToString() == id, circle);
+        public void Update(ObjectId id, Circle circle) =>
+            _circles.ReplaceOne(circle => circle.CircleId == id, circle);
 
         public void Remove(Circle circleIn) =>
             _circles.DeleteOne(circle => circle.CircleId == circleIn.CircleId);
 
-        public void Remove(string id) =>
-            _circles.DeleteOne(circle => circle.CircleId.ToString() == id);
+        public void Remove(ObjectId id) =>
+            _circles.DeleteOne(circle => circle.CircleId == id);
 
-        public void AddUserToCircle(string userId, string CircleId)
+        public void AddUserToCircle(ObjectId userId, ObjectId CircleId)
         {
-           var result = _circles.Find(s => s.CircleId.ToString() == CircleId).SingleOrDefault();
+           var result = _circles.Find(s => s.CircleId == CircleId).SingleOrDefault();
 
            result.UserId.Add(userId);
 
            Update(CircleId, result);
         }
 
-        public void RemoveUserFromCicrle(string userId, string circleId)
+        public void RemoveUserFromCicrle(ObjectId userId, ObjectId circleId)
         {
-            var result = _circles.Find(s => s.CircleId.ToString() == circleId).SingleOrDefault();
+            var result = _circles.Find(s => s.CircleId == circleId).SingleOrDefault();
 
             result.UserId.Remove(userId);
 

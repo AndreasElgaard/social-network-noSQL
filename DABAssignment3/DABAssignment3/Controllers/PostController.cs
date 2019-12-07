@@ -7,6 +7,7 @@ using DABAssignment3.Models;
 using DABAssignment3.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace DABAssignment3.Controllers
 {
@@ -38,7 +39,7 @@ namespace DABAssignment3.Controllers
 
         // GET: api/Post/5
         [HttpGet("{id}")]
-        public ActionResult<PostResponse> Get(string id)
+        public ActionResult<PostResponse> Get(ObjectId id)
         {
             var post = _postservice.Get(id);
 
@@ -63,7 +64,7 @@ namespace DABAssignment3.Controllers
 
         // PUT: api/Post/5
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] PostRequest request)
+        public IActionResult Put(ObjectId id, [FromBody] PostRequest request)
         {
             var post = _mapper.Map<Post>(request);
 
@@ -74,7 +75,7 @@ namespace DABAssignment3.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(ObjectId id)
         {
             _postservice.Remove(id);
 

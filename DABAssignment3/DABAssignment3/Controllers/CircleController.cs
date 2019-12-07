@@ -9,6 +9,7 @@ using DABAssignment3.Models;
 using DABAssignment3.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace DABAssignment3.Controllers
 {
@@ -40,7 +41,7 @@ namespace DABAssignment3.Controllers
 
         // GET: api/Circle/5
         [HttpGet("{id}")]
-        public ActionResult<CircleResponse> Get(string id)
+        public ActionResult<CircleResponse> Get(ObjectId id)
         {
             var circle = _CircleService.Get(id);
 
@@ -65,7 +66,7 @@ namespace DABAssignment3.Controllers
 
         // PUT: api/Circle/5
         [HttpPut("{id}")]
-        public IActionResult Put(string id, [FromBody] CircleRequest request)
+        public IActionResult Put(ObjectId id, [FromBody] CircleRequest request)
         {
             var circle = _mapper.Map<Circle>(request);
 
@@ -76,7 +77,7 @@ namespace DABAssignment3.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
+        public IActionResult Delete(ObjectId id)
         {
             _CircleService.Remove(id);
 
@@ -85,7 +86,7 @@ namespace DABAssignment3.Controllers
 
         // DELETE: api/RemoveUser
         [HttpDelete]
-        public IActionResult RemoveUser(string userId, string circleId)
+        public IActionResult RemoveUser(ObjectId userId, ObjectId circleId)
         {
             _CircleService.RemoveUserFromCicrle(userId, circleId);
 
@@ -93,7 +94,7 @@ namespace DABAssignment3.Controllers
         }
 
         [HttpPut]
-        public IActionResult AddUser(string userId, string circleId)
+        public IActionResult AddUser(ObjectId userId, ObjectId circleId)
         {
             _CircleService.AddUserToCircle(userId, circleId);
 

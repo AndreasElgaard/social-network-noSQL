@@ -20,8 +20,8 @@ namespace DABAssignment3.Models
 
         public Circle(string name)
         {
-            UserId = new List<string>();
-            PostId = new List<string>();
+            UserId = new List<ObjectId>();
+            PostId = new List<ObjectId>();
             Name = name;
         }
 
@@ -33,9 +33,9 @@ namespace DABAssignment3.Models
         public string Name { get; set; }
 
         [BsonElement("PostId")]
-        public List<string> PostId { get; set; }
+        public List<ObjectId> PostId { get; set; }
 
         [BsonElement("UserId")]
-        public List<string> UserId { get; set; }
+        public List<ObjectId> UserId { get; set; }
     }
 }

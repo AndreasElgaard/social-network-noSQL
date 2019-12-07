@@ -15,7 +15,7 @@ namespace DABAssignment3.Models
 
         }
 
-        public Comment(string text, string postid, string userid)
+        public Comment(string text, ObjectId postid, ObjectId userid)
         {
             PostId = postid;
             UserId = userid; 
@@ -30,9 +30,9 @@ namespace DABAssignment3.Models
         public string Text { get; set; }
 
         [BsonElement("PostId")]
-        public string PostId { get; set; }
+        public ObjectId PostId { get; set; }
 
         [BsonElement("UserId")]
-        public string UserId { get; set; }
+        public ObjectId UserId { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
 using DABAssignment3.Models.SocialnetworkSettings;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DABAssignment3.Services
@@ -23,9 +24,9 @@ namespace DABAssignment3.Services
             return _comment.Find(book => true).ToList();
         }
 
-        public Comment Get(string Id)
+        public Comment Get(ObjectId Id)
         {
-            return _comment.Find<Comment>(comment => comment.CommentId.ToString() == Id).FirstOrDefault();
+            return _comment.Find<Comment>(comment => comment.CommentId == Id).FirstOrDefault();
         }
 
         public Comment Create(Comment Comment)
@@ -34,9 +35,9 @@ namespace DABAssignment3.Services
             return Comment;
         }
 
-        public void Update(string id, Comment Comment)
+        public void Update(ObjectId id, Comment Comment)
         {
-            _comment.ReplaceOne(comment => comment.CommentId.ToString() == id, Comment);
+            _comment.ReplaceOne(comment => comment.CommentId == id, Comment);
         }
 
         public void Remove(Comment Comment)
@@ -44,9 +45,9 @@ namespace DABAssignment3.Services
             _comment.DeleteOne(comment=> comment.CommentId == Comment.CommentId);
         }
 
-        public void Remove(string id)
+        public void Remove(ObjectId id)
         {
-            _comment.DeleteOne(comment => comment.CommentId.ToString() == id);
+            _comment.DeleteOne(comment => comment.CommentId == id);
         }
     }
 }
