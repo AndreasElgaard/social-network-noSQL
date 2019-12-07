@@ -171,22 +171,29 @@ namespace DABAssignment3.Controllers
         public IActionResult Feed(string userid)
         {
             var _feed = new FeedResponse();
-            var user = _userservice.FindByName(userid);
+            var userFeed = _userservice.FindByName(userid);
+
+            //if user does not exits 
+            if (userFeed == null)
+            {
+                return BadRequest(new {message = "UserId does not exist"}); 
+            }
+
 
             //Find all subscribers and show their posts on feed wall
-            foreach (var subscriber in user.SubscriberId)
+            foreach (var subscriber in userFeed.SubscriberId)
             {
-                var provider = _userservice.Get(user.UserId.ToString());
-                if (provider.BlockedUserId.Contains(user.UserId.ToString()))
+                var provider = _userservice.Get(userFeed.UserId.ToString());
+                if (provider.BlockedUserId.Contains(userFeed.UserId.ToString()))
                 {
                     continue;
                 }
 
                 var circle = _circleService.Get(subscriber);
-                var subscriberid = user.SubscriberId;
+                var subscriberid = userFeed.SubscriberId;
                 for (int i = 0; i < 6; i++)
                 {
-                    _feed
+                    _feed.FeedResponses.Add(circle.PostId[circle.PostId.Count - i]);
                 }
             }
         }
