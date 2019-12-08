@@ -53,11 +53,11 @@ namespace DABAssignment3.Controllers
 
         // POST: api/Post
         [HttpPost]
-        public IActionResult Post([FromBody] Post request)
+        public IActionResult Post([FromBody] PostRequest request)
         {
-            //var post = _mapper.Map<Post>(request);
+            var post = _mapper.Map<Post>(request);
 
-            var result = _postservice.Create(request);
+            var result = _postservice.Create(post);
             
             return Ok(_mapper.Map<PostResponse>(result));
         }
