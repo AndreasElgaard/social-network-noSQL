@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace DABAssignment3.Models
@@ -49,4 +50,6 @@ namespace DABAssignment3.Models
         public List<string> CommentId { get; set; }
 
     }
+
+    
 }
