@@ -33,8 +33,10 @@ namespace DABAssignment3.Services
             return circle;
         }
 
-        public void Update(string id, Circle circle) =>
-            _circles.ReplaceOne(circle => circle.CircleId == id, circle);
+        public void Update(string id, Circle circle)
+        {
+            _circles.ReplaceOne(circle => circle.CircleId.Equals(id), circle);
+        }
 
         public void Remove(Circle circleIn) =>
             _circles.DeleteOne(circle => circle.CircleId == circleIn.CircleId);
@@ -58,6 +60,15 @@ namespace DABAssignment3.Services
             result.UserId.Remove(userId);
 
             Update(circleId, result);
+        }
+
+        private ObjectId GetInternalId(string Id)
+        {
+            ObjectId internalId;
+            if (!ObjectId.TryParse(Id, out internalId))
+                internalId = ObjectId.Empty;
+
+            return internalId;
         }
     }
 }

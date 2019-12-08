@@ -9,6 +9,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DABAssignment3.Models
 {
+    [BsonIgnoreExtraElements]
     public class Circle
     {
         [BsonConstructor]
@@ -27,9 +28,6 @@ namespace DABAssignment3.Models
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId InternalId { get; set; }
-
-        [BsonElement]
         public string CircleId { get; set; }
 
         [BsonElement("Name")]
