@@ -8,6 +8,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DABAssignment3.Models
 {
+    [BsonIgnoreExtraElements]
     public class User
     {
         [BsonConstructor]
@@ -29,9 +30,6 @@ namespace DABAssignment3.Models
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId InternalId { get; set; }
-
-        [BsonElement]
         public string UserId { get; set; }
 
         [BsonElement("Name")]
