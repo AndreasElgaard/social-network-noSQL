@@ -22,14 +22,16 @@ namespace DABAssignment3.Controllers
         private readonly IUserService _userservice;
         private readonly ICircleService _circleService;
         private readonly IPostService _postService;
+        private readonly ICommentService _commentservice;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService userService, IMapper mapper, ICircleService circleService, IPostService postService)
+        public UserController(IUserService userService, IMapper mapper, ICircleService circleService, IPostService postService, ICommentService commentservice)
         {
             _userservice = userService;
             _mapper = mapper;
             _circleService = circleService;
             _postService = postService;
+            _commentservice = commentservice;
         }
         // GET: api/User
         [HttpGet]
@@ -182,9 +184,7 @@ namespace DABAssignment3.Controllers
             Circle circle2 = new Circle("CS:GO");
             Circle circle3 = new Circle("LOL");
 
-            _circleService.Create(circle1);
-            _circleService.Create(circle2);
-            _circleService.Create(circle3);
+            
 
             u1.CircleId.Add(circle1.CircleId);
             u2.CircleId.Add(circle1.CircleId);
@@ -197,6 +197,9 @@ namespace DABAssignment3.Controllers
             u1.CircleId.Add(circle3.CircleId);
             u2.CircleId.Add(circle3.CircleId);
             u3.CircleId.Add(circle3.CircleId);
+
+            u1.BlockedUserId.Add(u5.UserId);
+            u1.SubscriberId.Add(u3.UserId);
 
             _userservice.Create(u1);
             _userservice.Create(u2);
@@ -217,9 +220,9 @@ namespace DABAssignment3.Controllers
             circle3.UserId.Add(u3.UserId);
             circle3.UserId.Add(u5.UserId);
 
-            _circleService.Update(circle1.CircleId,circle1);
-            _circleService.Update(circle2.CircleId, circle2);
-            _circleService.Update(circle3.CircleId, circle3);
+            //_circleService.Update(circle1.CircleId,circle1);
+            //_circleService.Update(circle2.CircleId, circle2);
+            //_circleService.Update(circle3.CircleId, circle3);
             
             Post post1 = new Post("","Hold da op, man får slupret noget energidrik i sig under sådan en aflevering", 
                 false, circle1.CircleId,u1.UserId);
@@ -232,12 +235,25 @@ namespace DABAssignment3.Controllers
             Post post5 = new Post("https://tinyurl.com/vyj7l8v", "",
                 false, circle3.CircleId, u5.UserId);
 
+            _postService.Create(post1);
+            _postService.Create(post2);
+            _postService.Create(post3);
+            _postService.Create(post4);
+            _postService.Create(post5);
+
             Comment c1 = new Comment("Gå hjem",post1.PostId,u2.UserId);
             Comment c2 = new Comment("Savner det", post2.PostId, u1.UserId);
             Comment c3 = new Comment("Nej, det er jo mig", post3.PostId, u5.UserId);
             Comment c4 = new Comment("Ikke fair, du blev carried", post4.PostId, u1.UserId);
             Comment c5 = new Comment("Du er så ringe", post5.PostId, u5.UserId);
             Comment c6 = new Comment("Det har bare at være monster", post1.PostId, u4.UserId);
+
+            _commentservice.Create(c1);
+            _commentservice.Create(c2);
+            _commentservice.Create(c3);
+            _commentservice.Create(c4);
+            _commentservice.Create(c5);
+            _commentservice.Create(c6);
 
             post1.CommentId.Add(c1.CommentId);
             post2.CommentId.Add(c2.CommentId);
@@ -252,9 +268,22 @@ namespace DABAssignment3.Controllers
             circle2.PostId.Add(post4.PostId);
             circle3.PostId.Add(post5.PostId);
 
-            _circleService.Update(circle1.CircleId,circle1);
-            _circleService.Update(circle2.CircleId, circle2);
-            _circleService.Update(circle3.CircleId, circle3);
+            //_circleService.Update(circle1.CircleId,circle1);
+            //_circleService.Update(circle2.CircleId, circle2);
+            //_circleService.Update(circle3.CircleId, circle3);
+
+
+            Post publicpost = new Post("Det her er en Public post, den kan Benjamin ikke se", "",
+                true, "", u1.UserId);
+            Post publicpost2 = new Post("Det her er en Public post, den kan Mathias godt se", "",
+                true, "", u3.UserId);
+
+            _postService.Create(publicpost);
+            _postService.Create(publicpost2);
+
+            _circleService.Create(circle1);
+            _circleService.Create(circle2);
+            _circleService.Create(circle3);
 
             return Ok();
         }
