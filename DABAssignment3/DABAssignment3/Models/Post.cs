@@ -15,19 +15,22 @@ namespace DABAssignment3.Models
 
         }
         [BsonConstructor]
-        public Post(string img, string text, bool ispublic, ObjectId circleid, ObjectId userid)
+        public Post(string img, string text, bool ispublic, string circleid, string userid)
         {
             IMG = img;
             Text = text;
             Public = ispublic;
             CircleId = circleid;
             UserId = userid; 
-            CommentId = new List<ObjectId>();
+            CommentId = new List<string>();
         }
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId PostId { get; set; }
+        public ObjectId InternalId { get; set; }
+
+        [BsonElement]
+        public string PostId { get; set; }
 
         [BsonElement("IMG")]
         public string IMG { get; set; }
@@ -39,13 +42,13 @@ namespace DABAssignment3.Models
         public bool Public { get; set; }
 
         [BsonElement("CircleId")]
-        public ObjectId CircleId { get; set; }
+        public string CircleId { get; set; }
 
         [BsonElement("UserId")]
-        public ObjectId UserId { get; set; }
+        public string UserId { get; set; }
 
         [BsonElement("CommentId")]
-        public List<ObjectId> CommentId { get; set; }
+        public List<string> CommentId { get; set; }
 
     }
 }

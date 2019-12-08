@@ -11,16 +11,16 @@ namespace DABAssignment3.Services
     public interface IUserService
     {
         List<User> GetAll();
-        User Get(ObjectId Id);
+        User Get(string Id);
 
         User FindByName(string Name);
 
         User Create(User User);
 
-        void Update(ObjectId id, User User);
+        void Update(string id, User User);
 
         void Remove(User User);
-        void Remove(ObjectId id);
+        void Remove(string id);
 
         string BlockUser(string UserName, string BlockUser);
         string SubsribeToUser(string UserName, string subscribeName);

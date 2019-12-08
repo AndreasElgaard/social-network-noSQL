@@ -8,15 +8,15 @@ namespace DABAssignment3.Controllers
 {
     public class PostRequest
     {
-        public ObjectId PostId { get; set; }
+        public string PostId { get; set; }
 
         public string Name { get; set; }
 
         public string Text { get; set; }
 
-        public ObjectId? CircleId{ get; set; }
+        public string? CircleId{ get; set; }
 
-        public ObjectId UserId { get; set; }
+        public string UserId { get; set; }
 
         public string IMG { get; set; }
 

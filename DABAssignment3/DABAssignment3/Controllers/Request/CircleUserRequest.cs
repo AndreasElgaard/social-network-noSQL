@@ -8,8 +8,8 @@ namespace DABAssignment3.Controllers.Request
 {
     public class CircleUserRequest
     {
-        public ObjectId CircleId { get; set; }
+        public string CircleId { get; set; }
 
-        public ObjectId UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

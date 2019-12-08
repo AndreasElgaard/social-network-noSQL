@@ -41,7 +41,7 @@ namespace DABAssignment3.Controllers
 
         // GET: api/Circle/5
         [HttpGet("{id}")]
-        public ActionResult<CircleResponse> Get(ObjectId id)
+        public ActionResult<CircleResponse> Get(string id)
         {
             var circle = _CircleService.Get(id);
 
@@ -77,7 +77,7 @@ namespace DABAssignment3.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(ObjectId id)
+        public IActionResult Delete(string id)
         {
             _CircleService.Remove(id);
 
