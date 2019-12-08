@@ -8,6 +8,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DABAssignment3.Models
 {
+    [BsonIgnoreExtraElements]
     public class User
     {
         [BsonConstructor]
@@ -21,15 +22,15 @@ namespace DABAssignment3.Models
             Name = name;
             Age = age;
             Gender = gender;
-            PostId = new List<ObjectId>();
-            SubscriberId = new List<ObjectId>();
-            BlockedUserId = new List<ObjectId>();
-            CircleId = new List<ObjectId>();
+            PostId = new List<string>();
+            SubscriberId = new List<string>();
+            BlockedUserId = new List<string>();
+            CircleId = new List<string>();
         }
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId UserId { get; set; }
+        public string UserId { get; set; }
 
         [BsonElement("Name")]
         public string Name { get; set; }
@@ -41,16 +42,16 @@ namespace DABAssignment3.Models
         public string Gender { get; set; }
 
         [BsonElement("PostId")]
-        public List<ObjectId> PostId { get; set; }
+        public List<string> PostId { get; set; }
 
         [BsonElement("CircleId")]
-        public List<ObjectId> CircleId { get; set; }
+        public List<string> CircleId { get; set; }
 
         [BsonElement("SubscriberId")]
-        public List<ObjectId> SubscriberId { get; set; }
+        public List<string> SubscriberId { get; set; }
 
         [BsonElement("BlockedUser")]
-        public List<ObjectId> BlockedUserId { get; set; }
+        public List<string> BlockedUserId { get; set; }
 
         //[BsonElement("Wall")]
         //public List<string> Wall { get; set; }

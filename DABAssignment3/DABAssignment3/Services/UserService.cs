@@ -28,8 +28,8 @@ namespace DABAssignment3.Services
         public List<User> GetAll() =>
             _users.Find(User => true).ToList();
 
-        public User Get(ObjectId  Id) =>
-            _users.Find<User>(User => User.UserId == Id).FirstOrDefault();
+        public User Get(string Id) =>
+            _users.Find<User>(User => User.UserId.Equals(Id)).FirstOrDefault();
 
         public User FindByName(string Name) =>
             _users.Find(user => user.Name == Name).SingleOrDefault();
@@ -41,13 +41,13 @@ namespace DABAssignment3.Services
             return User;
         }
         
-        public void Update(ObjectId id, User UserIn) =>
+        public void Update(string id, User UserIn) =>
             _users.ReplaceOne(User => User.UserId == id, UserIn);
 
         public void Remove(User UserIn) =>
             _users.DeleteOne(User => User.UserId == UserIn.UserId);
 
-        public void Remove(ObjectId id) =>
+        public void Remove(string id) =>
             _users.DeleteOne(User => User.UserId == id);
 
         public string SubsribeToUser(string UserName, string subscribeName)

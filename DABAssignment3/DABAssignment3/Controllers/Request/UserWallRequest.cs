@@ -8,8 +8,8 @@ namespace DABAssignment3.Controllers.Request
 {
     public class UserWallRequest
     {
-        public ObjectId GuestId { get; set; }
+        public string GuestId { get; set; }
 
-        public ObjectId UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

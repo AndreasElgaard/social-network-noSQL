@@ -47,7 +47,7 @@ namespace DABAssignment3.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}")]
-        public ActionResult<UserResponse> Get(ObjectId id)
+        public ActionResult<UserResponse> Get(string id)
         {
             var user = _userservice.Get(id);
 
@@ -83,7 +83,7 @@ namespace DABAssignment3.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(ObjectId id)
+        public IActionResult Delete(string id)
         {
             _userservice.Remove(id);
 

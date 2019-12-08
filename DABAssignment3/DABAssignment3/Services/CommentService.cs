@@ -24,7 +24,7 @@ namespace DABAssignment3.Services
             return _comment.Find(book => true).ToList();
         }
 
-        public Comment Get(ObjectId Id)
+        public Comment Get(string Id)
         {
             return _comment.Find<Comment>(comment => comment.CommentId == Id).FirstOrDefault();
         }
@@ -35,7 +35,7 @@ namespace DABAssignment3.Services
             return Comment;
         }
 
-        public void Update(ObjectId id, Comment Comment)
+        public void Update(string id, Comment Comment)
         {
             _comment.ReplaceOne(comment => comment.CommentId == id, Comment);
         }
@@ -45,7 +45,7 @@ namespace DABAssignment3.Services
             _comment.DeleteOne(comment=> comment.CommentId == Comment.CommentId);
         }
 
-        public void Remove(ObjectId id)
+        public void Remove(string id)
         {
             _comment.DeleteOne(comment => comment.CommentId == id);
         }

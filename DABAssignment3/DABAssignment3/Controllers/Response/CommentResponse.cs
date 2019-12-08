@@ -10,8 +10,8 @@ namespace DABAssignment3.Controllers.Response
     {
         public string Text { get; set; }
 
-        public ObjectId PostId { get; set; }
+        public string PostId { get; set; }
 
-        public ObjectId UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

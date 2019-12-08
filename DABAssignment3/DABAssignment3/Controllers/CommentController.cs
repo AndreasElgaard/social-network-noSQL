@@ -41,7 +41,7 @@ namespace DABAssignment3.Controllers
 
         // GET: api/Comment/5
         [HttpGet("{id}")]
-        public ActionResult<CommentResponse> Get(ObjectId id)
+        public ActionResult<CommentResponse> Get(string id)
         {
             var comment = _commentService.Get(id);
 
@@ -77,7 +77,7 @@ namespace DABAssignment3.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(ObjectId id)
+        public IActionResult Delete(string id)
         {
             _commentService.Remove(id);
 

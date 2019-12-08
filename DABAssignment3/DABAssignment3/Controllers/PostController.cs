@@ -39,7 +39,7 @@ namespace DABAssignment3.Controllers
 
         // GET: api/Post/5
         [HttpGet("{id}")]
-        public ActionResult<PostResponse> Get(ObjectId id)
+        public ActionResult<PostResponse> Get(string id)
         {
             var post = _postservice.Get(id);
 
@@ -75,7 +75,7 @@ namespace DABAssignment3.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(ObjectId id)
+        public IActionResult Delete(string id)
         {
             _postservice.Remove(id);
 
