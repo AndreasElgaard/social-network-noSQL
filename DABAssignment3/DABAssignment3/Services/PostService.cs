@@ -19,7 +19,7 @@ namespace DABAssignment3.Services
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            BsonClassMap.RegisterClassMap<Post>(cm =>
+            var map = BsonClassMap.RegisterClassMap<Post>(cm =>
             {
                 cm.AutoMap();
                 cm.MapCreator(p => new Post(p.IMG, p.Text, p.Public, p.CircleId, p.UserId));
