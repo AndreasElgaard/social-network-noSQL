@@ -199,6 +199,7 @@ namespace DABAssignment3.Controllers
                     _feed.FeedResponses.Add(circle.PostId[circle.PostId.Count - i]);
                 }
             }
+            return Ok(_feed);
         }
 
         //Post all sample data
