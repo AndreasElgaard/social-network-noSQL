@@ -72,11 +72,11 @@ namespace DABAssignment3.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] UserRequest request)
+        public IActionResult Put(string id, [FromBody] UserRequest request)
         {
             var user = _mapper.Map<User>(request);
 
-            _userservice.Update(request.UserId, user);
+            _userservice.Update(id, user);
 
             return Ok();
         }
