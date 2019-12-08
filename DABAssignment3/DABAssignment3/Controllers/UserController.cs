@@ -170,6 +170,37 @@ namespace DABAssignment3.Controllers
             return Ok(wall);
         }
 
+        [HttpGet]
+        public IActionResult Feed(string userid)
+        {
+            var _feed = new FeedResponse();
+            var userFeed = _userservice.FindByName(userid);
+
+            //if user does not exits 
+            if (userFeed == null)
+            {
+                return BadRequest(new { message = "UserId does not exist" });
+            }
+
+
+            //Find all subscribers and show their posts on feed wall
+            foreach (var subscriber in userFeed.SubscriberId)
+            {
+                var provider = _userservice.Get(userFeed.UserId.ToString());
+                if (provider.BlockedUserId.Contains(userFeed.UserId.ToString()))
+                {
+                    continue;
+                }
+
+                var circle = _circleService.Get(subscriber);
+                var subscriberid = userFeed.SubscriberId;
+                for (int i = 0; i < 6; i++)
+                {
+                    _feed.FeedResponses.Add(circle.PostId[circle.PostId.Count - i]);
+                }
+            }
+        }
+
         //Post all sample data
         [HttpPost("Post Sample Data")]
         public IActionResult PostSampleData()
