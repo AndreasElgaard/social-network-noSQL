@@ -18,7 +18,7 @@ namespace DABAssignment3.Controllers
         private readonly IPostService _postservice;
         private readonly IMapper _mapper;
 
-        public PostController(PostService postService, IMapper mapper)
+        public PostController(IPostService postService, IMapper mapper)
         {
             _postservice = postService;
             _mapper = mapper;
@@ -53,22 +53,22 @@ namespace DABAssignment3.Controllers
 
         // POST: api/Post
         [HttpPost]
-        public IActionResult Post([FromBody] PostRequest request)
+        public IActionResult Post([FromBody] Post request)
         {
-            var post = _mapper.Map<Post>(request);
+            //var post = _mapper.Map<Post>(request);
 
-            var result = _postservice.Create(post);
+            var result = _postservice.Create(request);
             
             return Ok(_mapper.Map<PostResponse>(result));
         }
 
         // PUT: api/Post/5
         [HttpPut("{id}")]
-        public IActionResult Put(ObjectId id, [FromBody] PostRequest request)
+        public IActionResult Put([FromBody] PostRequest request)
         {
             var post = _mapper.Map<Post>(request);
 
-            _postservice.Update(id, post);
+            _postservice.Update(request.PostId, post);
 
             return Ok();
         }

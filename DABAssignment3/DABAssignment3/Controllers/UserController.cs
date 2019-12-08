@@ -72,11 +72,11 @@ namespace DABAssignment3.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public IActionResult Put(ObjectId id, [FromBody] UserRequest request)
+        public IActionResult Put([FromBody] UserRequest request)
         {
             var user = _mapper.Map<User>(request);
 
-            _userservice.Update(id, user);
+            _userservice.Update(request.UserId, user);
 
             return Ok();
         }
@@ -123,12 +123,12 @@ namespace DABAssignment3.Controllers
         }
 
         [HttpGet("Wall")]
-        public IActionResult Wall(ObjectId UserId, ObjectId GuestId)
+        public IActionResult Wall(UserWallRequest request)
         {
 
-            var userwall = _userservice.Get(UserId);
+            var userwall = _userservice.Get(request.UserId);
 
-            var guest = _userservice.Get(GuestId);
+            var guest = _userservice.Get(request.GuestId);
 
             var wall = new WallResponse();
 

@@ -8,6 +8,8 @@ namespace DABAssignment3.Controllers
 {
     public class PostRequest
     {
+        public ObjectId PostId { get; set; }
+
         public string Name { get; set; }
 
         public string Text { get; set; }

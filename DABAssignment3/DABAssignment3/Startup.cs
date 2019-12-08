@@ -40,7 +40,6 @@ namespace DABAssignment3
             services.AddSingleton<IPostService, PostService>();
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<ICommentService, CommentService>();
-            services.AddControllersWithViews();
 
             services.AddAutoMapper(typeof(Startup));
 

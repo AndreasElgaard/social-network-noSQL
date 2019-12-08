@@ -14,7 +14,6 @@ namespace DABAssignment3.Models
         {
 
         }
-
         [BsonConstructor]
         public Post(string img, string text, bool ispublic, ObjectId circleid, ObjectId userid)
         {
@@ -47,9 +46,6 @@ namespace DABAssignment3.Models
 
         [BsonElement("CommentId")]
         public List<ObjectId> CommentId { get; set; }
-
-
-
 
     }
 }

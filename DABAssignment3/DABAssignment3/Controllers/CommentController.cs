@@ -66,11 +66,11 @@ namespace DABAssignment3.Controllers
 
         // PUT: api/Comment/5
         [HttpPut("{id}")]
-        public IActionResult Put(ObjectId id, [FromBody] CommentRequest request)
+        public IActionResult Put([FromBody] CommentRequest request)
         {
             var comment = _mapper.Map<Comment>(request);
 
-            _commentService.Update(id, comment);
+            _commentService.Update(request.CommentId, comment);
 
             return Ok();
         }

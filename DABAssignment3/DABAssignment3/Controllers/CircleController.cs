@@ -20,7 +20,7 @@ namespace DABAssignment3.Controllers
         private readonly ICircleService _CircleService;
         private readonly IMapper _mapper;
 
-        public CircleController(CircleService circleService, IMapper mapper)
+        public CircleController(ICircleService circleService, IMapper mapper)
         {
             _CircleService = circleService;
             _mapper = mapper;
@@ -66,11 +66,11 @@ namespace DABAssignment3.Controllers
 
         // PUT: api/Circle/5
         [HttpPut("{id}")]
-        public IActionResult Put(ObjectId id, [FromBody] CircleRequest request)
+        public IActionResult Put([FromBody] CircleRequest request)
         {
             var circle = _mapper.Map<Circle>(request);
 
-            _CircleService.Update(id, circle);
+            _CircleService.Update(request.CircleId, circle);
 
             return Ok();
         }
@@ -85,18 +85,18 @@ namespace DABAssignment3.Controllers
         }
 
         // DELETE: api/RemoveUser
-        [HttpDelete]
-        public IActionResult RemoveUser(ObjectId userId, ObjectId circleId)
+        [HttpDelete("RemoveUser")]
+        public IActionResult RemoveUser([FromBody] CircleUserRequest request)
         {
-            _CircleService.RemoveUserFromCicrle(userId, circleId);
+            _CircleService.RemoveUserFromCicrle(request.UserId, request.CircleId);
 
             return Ok();
         }
 
-        [HttpPut]
-        public IActionResult AddUser(ObjectId userId, ObjectId circleId)
+        [HttpPut("AddUser")]
+        public IActionResult AddUser([FromBody] CircleUserRequest request)
         {
-            _CircleService.AddUserToCircle(userId, circleId);
+            _CircleService.AddUserToCircle(request.UserId, request.CircleId);
 
             return Ok();
         }
