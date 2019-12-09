@@ -38,7 +38,7 @@ namespace DABAssignment3
 
             services.AddSingleton<ICircleService, CircleService>();
 
-            services.AddScoped<IPostService, PostService>();
+            services.AddSingleton<IPostService, PostService>();
 
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<ICommentService, CommentService>();
