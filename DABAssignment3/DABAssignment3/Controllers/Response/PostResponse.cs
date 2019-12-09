@@ -7,13 +7,11 @@ namespace DABAssignment3.Controllers
 {
     public class PostResponse
     {
-        public string Name { get; set; }
-
         public string Text { get; set; }
 
-        public string CircleName { get; set; }
+        public string CircleId { get; set; }
 
-        public string UserName { get; set; }
+        public string UserId { get; set; }
 
         public string IMG { get; set; }
     }
