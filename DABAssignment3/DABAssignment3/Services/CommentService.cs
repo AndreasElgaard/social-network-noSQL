@@ -12,6 +12,7 @@ namespace DABAssignment3.Services
     public class CommentService : ICommentService
     {
         private readonly IMongoCollection<Comment> _comment;
+
         public CommentService(ISocialnetworkDBsettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
@@ -19,6 +20,7 @@ namespace DABAssignment3.Services
 
             _comment = database.GetCollection<Comment>(settings.CommentCollectionName);
         }
+
         public List<Comment> GetAll()
         {
             return _comment.Find(book => true).ToList();

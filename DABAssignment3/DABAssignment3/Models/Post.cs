@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 
 namespace DABAssignment3.Models
 {
@@ -16,7 +17,8 @@ namespace DABAssignment3.Models
         {
 
         }
-        [BsonConstructor]
+
+        
         public Post(string img, string text, bool ispublic, string circleid, string userid)
         {
             IMG = img;

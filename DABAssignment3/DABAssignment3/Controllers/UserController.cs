@@ -67,7 +67,7 @@ namespace DABAssignment3.Controllers
 
             var result = _userservice.Create(user);
 
-            return Ok(_mapper.Map<UserResponse>(user));
+            return Ok(_mapper.Map<UserResponse>(result));
         }
 
         // PUT: api/User/5
