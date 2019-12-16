@@ -16,7 +16,7 @@ namespace DABAssignment3.Models
         {
 
         }
-        [BsonConstructor]
+
         public Post(string img, string text, bool ispublic, string circleid, string userid)
         {
             IMG = img;

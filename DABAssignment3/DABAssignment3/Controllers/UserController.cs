@@ -34,7 +34,7 @@ namespace DABAssignment3.Controllers
             _commentservice = commentservice;
         }
         // GET: api/User
-        [HttpGet]
+        [HttpGet("GetAll")]
         public ActionResult<List<UserResponse>> Get()
         {
             var user = _userservice.GetAll();
