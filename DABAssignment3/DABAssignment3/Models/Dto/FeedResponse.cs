@@ -8,6 +8,6 @@ namespace DABAssignment3.Models.Dto
 {
     public class FeedResponse
     {
-        public List<string> FeedResponses = new List<string>();
+        public List<PostResponse> FeedResponses = new List<PostResponse>();
     }
 }

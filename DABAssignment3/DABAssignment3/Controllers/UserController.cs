@@ -182,24 +182,38 @@ namespace DABAssignment3.Controllers
                 return BadRequest(new { message = "UserId does not exist" });
             }
 
-
-            //Find all subscribers and show their posts on feed wall
-            foreach (var subscriber in userFeed.SubscriberId)
+            foreach (var postid in userFeed.PostId)
             {
-                var provider = _userservice.Get(userFeed.UserId.ToString());
-                if (provider.BlockedUserId.Contains(userFeed.UserId.ToString()))
-                {
-                    continue;
-                }
+                var posts = _postService.Get(postid);
 
-                var circle = _circleService.Get(subscriber);
-                var subscriberid = userFeed.SubscriberId;
-                for (int i = 0; i < 6; i++)
+                _feed.FeedResponses.Add(_mapper.Map<PostResponse>(posts));
+            }
+
+
+            if (userFeed.SubscriberId != null)
+            {
+                foreach (var subId in userFeed.SubscriberId)
                 {
-                    _feed.FeedResponses.Add(circle.PostId[circle.PostId.Count - i]);
+                    var provider = _userservice.Get(subId);
+                    if (provider.BlockedUserId.Contains(userFeed.UserId))
+                    {
+                        continue;
+                    }
+                    
+                    foreach (var circleId in provider.CircleId)
+                    {
+                        var circle = _circleService.Get(circleId);
+
+
+                    }
+                        
+                        
+                    
                 }
             }
-            return Ok(_feed);
+
+
+            return Ok(_feed.FeedResponses);
         }
 
         //Post all sample data
@@ -314,8 +328,33 @@ namespace DABAssignment3.Controllers
             Post publicpost2 = new Post("Det her er en Public post, den kan Mathias godt se", "",
                 true, "", u3.UserId);
 
+            Post publicpost3 = new Post("Det her er en Public post, den kan Mathias godt se", "",
+                true, "", u3.UserId);
+            Post publicpost4 = new Post("Det her er en Public post, den kan Mathias godt se", "",
+                true, "", u3.UserId);
+            Post publicpost5 = new Post("Det her er en Public post, den kan Mathias godt se", "",
+                true, "", u3.UserId);
+            Post publicpost6 = new Post("Det her er en Public post, den kan Mathias godt se", "",
+                true, "", u3.UserId);
+            Post publicpost7 = new Post("Det her er en Public post, den kan Mathias godt se", "",
+                true, "", u3.UserId);
+            Post publicpost8 = new Post("Det her er en Public post, den kan Mathias godt se", "",
+                true, "", u3.UserId);
+
             _postService.Create(publicpost);
             _postService.Create(publicpost2);
+            _postService.Create(publicpost3);
+            _postService.Create(publicpost4);
+            _postService.Create(publicpost5);
+            _postService.Create(publicpost6);
+            _postService.Create(publicpost7);
+            _postService.Create(publicpost8);
+
+            u1.PostId.Add(publicpost3.PostId);
+            u2.PostId.Add(publicpost4.PostId);
+            u3.PostId.Add(publicpost5.PostId);
+            u4.PostId.Add(publicpost6.PostId);
+            u5.PostId.Add(publicpost8.PostId);
 
             _circleService.Update(circle1.CircleId, circle1);
             _circleService.Update(circle2.CircleId, circle2);
