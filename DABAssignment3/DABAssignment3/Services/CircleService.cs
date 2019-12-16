@@ -61,14 +61,5 @@ namespace DABAssignment3.Services
 
             Update(circleId, result);
         }
-
-        private ObjectId GetInternalId(string Id)
-        {
-            ObjectId internalId;
-            if (!ObjectId.TryParse(Id, out internalId))
-                internalId = ObjectId.Empty;
-
-            return internalId;
-        }
     }
 }

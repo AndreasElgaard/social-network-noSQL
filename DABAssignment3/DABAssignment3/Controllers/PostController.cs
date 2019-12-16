@@ -64,11 +64,11 @@ namespace DABAssignment3.Controllers
 
         // PUT: api/Post/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] PostRequest request)
+        public IActionResult Put(string id, [FromBody] PostRequest request)
         {
             var post = _mapper.Map<Post>(request);
 
-            _postservice.Update(request.PostId, post);
+            _postservice.Update(id, post);
 
             return Ok();
         }

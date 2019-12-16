@@ -69,7 +69,7 @@ namespace DABAssignment3.Controllers
 
             var result = _userservice.Create(user);
 
-            return Ok(_mapper.Map<UserResponse>(user));
+            return Ok(_mapper.Map<UserResponse>(result));
         }
 
         // PUT: api/User/5
@@ -124,13 +124,13 @@ namespace DABAssignment3.Controllers
             return Ok(result);
         }
 
-        [HttpGet("Wall")]
+        [HttpPost("Wall")]
         public IActionResult Wall(UserWallRequest request)
         {
 
-            var userwall = _userservice.Get(request.UserId);
+            var userwall = _userservice.FindByName(request.UserName);
 
-            var guest = _userservice.Get(request.GuestId);
+            var guest = _userservice.FindByName(request.GuestName);
 
             var wall = new WallResponse();
 
@@ -167,14 +167,14 @@ namespace DABAssignment3.Controllers
                 }
             }
             
-            return Ok(wall);
+            return Ok(wall.Responses);
         }
 
-        [HttpGet]
-        public IActionResult Feed(string userid)
+        [HttpGet("Feed")]
+        public IActionResult Feed(string Username)
         {
             var _feed = new FeedResponse();
-            var userFeed = _userservice.FindByName(userid);
+            var userFeed = _userservice.FindByName(Username);
 
             //if user does not exits 
             if (userFeed == null)
@@ -218,17 +218,17 @@ namespace DABAssignment3.Controllers
 
             
 
-            u1.CircleId.Add(circle1.CircleId);
-            u2.CircleId.Add(circle1.CircleId);
-            u3.CircleId.Add(circle1.CircleId);
-            u4.CircleId.Add(circle1.CircleId);
-            u1.CircleId.Add(circle2.CircleId);
-            u2.CircleId.Add(circle2.CircleId);
-            u4.CircleId.Add(circle2.CircleId);
-            u5.CircleId.Add(circle2.CircleId);
-            u1.CircleId.Add(circle3.CircleId);
-            u2.CircleId.Add(circle3.CircleId);
-            u3.CircleId.Add(circle3.CircleId);
+            //u1.CircleId.Add(circle1.CircleId);
+            //u2.CircleId.Add(circle1.CircleId);
+            //u3.CircleId.Add(circle1.CircleId);
+            //u4.CircleId.Add(circle1.CircleId);
+            //u1.CircleId.Add(circle2.CircleId);
+            //u2.CircleId.Add(circle2.CircleId);
+            //u4.CircleId.Add(circle2.CircleId);
+            //u5.CircleId.Add(circle2.CircleId);
+            //u1.CircleId.Add(circle3.CircleId);
+            //u2.CircleId.Add(circle3.CircleId);
+            //u3.CircleId.Add(circle3.CircleId);
 
             u1.BlockedUserId.Add(u5.UserId);
             u1.SubscriberId.Add(u3.UserId);
@@ -255,7 +255,11 @@ namespace DABAssignment3.Controllers
             //_circleService.Update(circle1.CircleId,circle1);
             //_circleService.Update(circle2.CircleId, circle2);
             //_circleService.Update(circle3.CircleId, circle3);
-            
+
+            _circleService.Create(circle1);
+            _circleService.Create(circle2);
+            _circleService.Create(circle3);
+
             Post post1 = new Post("","Hold da op, man får slupret noget energidrik i sig under sådan en aflevering", 
                 false, circle1.CircleId,u1.UserId);
             Post post2 = new Post("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.bonnier.cloud%2Ffiles%2Fill%2Fproduction%2F2014%2F05%2F07104857%2Fdesert3.jpg%3Fauto%3Dcompress%26fm%3Dpjpg%26fit%3Dmax%26fp-x%3D0.5%26fp-y%3D0.5%26w%3D1920%26ixlib%3Djs-1.2.0&f=1&nofb=1", 
@@ -300,7 +304,7 @@ namespace DABAssignment3.Controllers
             circle2.PostId.Add(post4.PostId);
             circle3.PostId.Add(post5.PostId);
 
-            //_circleService.Update(circle1.CircleId,circle1);
+            //_circleService.Update(circle1.CircleId, circle1);
             //_circleService.Update(circle2.CircleId, circle2);
             //_circleService.Update(circle3.CircleId, circle3);
 
@@ -313,9 +317,32 @@ namespace DABAssignment3.Controllers
             _postService.Create(publicpost);
             _postService.Create(publicpost2);
 
-            _circleService.Create(circle1);
-            _circleService.Create(circle2);
-            _circleService.Create(circle3);
+            _circleService.Update(circle1.CircleId, circle1);
+            _circleService.Update(circle2.CircleId, circle2);
+            _circleService.Update(circle3.CircleId, circle3);
+
+            //_circleService.Create(circle1);
+            //_circleService.Create(circle2);
+            //_circleService.Create(circle3);
+
+            u1.CircleId.Add(circle1.CircleId);
+            u2.CircleId.Add(circle1.CircleId);
+            u3.CircleId.Add(circle1.CircleId);
+            u4.CircleId.Add(circle1.CircleId);
+            u1.CircleId.Add(circle2.CircleId);
+            u2.CircleId.Add(circle2.CircleId);
+            u4.CircleId.Add(circle2.CircleId);
+            u5.CircleId.Add(circle2.CircleId);
+            u1.CircleId.Add(circle3.CircleId);
+            u2.CircleId.Add(circle3.CircleId);
+            u3.CircleId.Add(circle3.CircleId);
+
+            _userservice.Update(u1.UserId, u1);
+            _userservice.Update(u2.UserId, u2);
+            _userservice.Update(u3.UserId, u3);
+            _userservice.Update(u4.UserId, u4);
+            _userservice.Update(u5.UserId, u5);
+
 
             return Ok();
         }
