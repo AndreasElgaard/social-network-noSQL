@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
 using DABAssignment3.Models.SocialnetworkSettings;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DABAssignment3.Services
@@ -24,7 +25,7 @@ namespace DABAssignment3.Services
             _circles.Find(circle => true).ToList();
 
         public Circle Get(string Id) =>
-            _circles.Find<Circle>(circle => circle.CircleId.ToString() == Id).FirstOrDefault();
+            _circles.Find<Circle>(circle => circle.CircleId == Id).FirstOrDefault();
 
         public Circle Create(Circle circle)
         {
@@ -32,18 +33,20 @@ namespace DABAssignment3.Services
             return circle;
         }
 
-        public void Update(string id, Circle circle) =>
-            _circles.ReplaceOne(circle => circle.CircleId.ToString() == id, circle);
+        public void Update(string id, Circle circle)
+        {
+            _circles.ReplaceOne(circle => circle.CircleId.Equals(id), circle);
+        }
 
         public void Remove(Circle circleIn) =>
             _circles.DeleteOne(circle => circle.CircleId == circleIn.CircleId);
 
         public void Remove(string id) =>
-            _circles.DeleteOne(circle => circle.CircleId.ToString() == id);
+            _circles.DeleteOne(circle => circle.CircleId == id);
 
         public void AddUserToCircle(string userId, string CircleId)
         {
-           var result = _circles.Find(s => s.CircleId.ToString() == CircleId).SingleOrDefault();
+           var result = _circles.Find(s => s.CircleId == CircleId).SingleOrDefault();
 
            result.UserId.Add(userId);
 
@@ -52,7 +55,7 @@ namespace DABAssignment3.Services
 
         public void RemoveUserFromCicrle(string userId, string circleId)
         {
-            var result = _circles.Find(s => s.CircleId.ToString() == circleId).SingleOrDefault();
+            var result = _circles.Find(s => s.CircleId == circleId).SingleOrDefault();
 
             result.UserId.Remove(userId);
 

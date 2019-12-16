@@ -8,6 +8,6 @@ namespace DABAssignment3.Models.Dto
 {
     public class WallResponse
     {
-        public List<PostResponse> Responses { get; set; }
+        public List<PostResponse> Responses = new List<PostResponse>();
     }
 }

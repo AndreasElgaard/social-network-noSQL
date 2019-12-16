@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Attributes;
+using Newtonsoft.Json;
 
 namespace DABAssignment3.Models
 {
+    [BsonIgnoreExtraElements]
     public class Post
     {
         [BsonConstructor]
@@ -15,7 +18,7 @@ namespace DABAssignment3.Models
 
         }
 
-        [BsonConstructor]
+        
         public Post(string img, string text, bool ispublic, string circleid, string userid)
         {
             IMG = img;
@@ -28,7 +31,7 @@ namespace DABAssignment3.Models
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId PostId { get; set; }
+        public string PostId { get; set; }
 
         [BsonElement("IMG")]
         public string IMG { get; set; }
@@ -48,8 +51,7 @@ namespace DABAssignment3.Models
         [BsonElement("CommentId")]
         public List<string> CommentId { get; set; }
 
-
-
-
     }
+
+    
 }

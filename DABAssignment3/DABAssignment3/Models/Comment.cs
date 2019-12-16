@@ -7,6 +7,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace DABAssignment3.Models
 {
+    [BsonIgnoreExtraElements]
     public class Comment
     {
         [BsonConstructor]
@@ -24,7 +25,7 @@ namespace DABAssignment3.Models
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId CommentId { get; set; }
+        public string CommentId { get; set; }
 
         [BsonElement("Text")]
         public string Text { get; set; }

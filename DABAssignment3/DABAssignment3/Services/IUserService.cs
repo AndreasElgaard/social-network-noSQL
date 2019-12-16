@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
 using DABAssignment3.Models.Dto;
+using MongoDB.Bson;
 
 namespace DABAssignment3.Services
 {

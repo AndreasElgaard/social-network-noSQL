@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DABAssignment3.Models;
 using DABAssignment3.Models.Dto;
 using DABAssignment3.Models.SocialnetworkSettings;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 
@@ -28,7 +29,7 @@ namespace DABAssignment3.Services
             _users.Find(User => true).ToList();
 
         public User Get(string Id) =>
-            _users.Find<User>(User => User.UserId.ToString() == Id).FirstOrDefault();
+            _users.Find<User>(User => User.UserId.Equals(Id)).FirstOrDefault();
 
         public User FindByName(string Name) =>
             _users.Find(user => user.Name == Name).SingleOrDefault();
@@ -39,24 +40,24 @@ namespace DABAssignment3.Services
             _users.InsertOne(User);
             return User;
         }
-
+        
         public void Update(string id, User UserIn) =>
-            _users.ReplaceOne(User => User.UserId.ToString() == id, UserIn);
+            _users.ReplaceOne(User => User.UserId == id, UserIn);
 
         public void Remove(User UserIn) =>
             _users.DeleteOne(User => User.UserId == UserIn.UserId);
 
         public void Remove(string id) =>
-            _users.DeleteOne(User => User.UserId.ToString() == id);
+            _users.DeleteOne(User => User.UserId == id);
 
         public string SubsribeToUser(string UserName, string subscribeName)
         {
             var user = FindByName(UserName);
             var subscribe = FindByName(subscribeName);
 
-            user.SubscriberId.Add(subscribe.UserId.ToString());
+            user.SubscriberId.Add(subscribe.UserId);
 
-            Update(user.UserId.ToString(), user);
+            Update(user.UserId, user);
 
             return "User Added To Subscriber list: " + subscribe.Name;
         }
@@ -66,9 +67,9 @@ namespace DABAssignment3.Services
             var user = FindByName(UserName);
             var blocked = FindByName(BlockUser);
 
-            user.BlockedUserId.Add(blocked.UserId.ToString());
+            user.BlockedUserId.Add(blocked.UserId);
 
-            Update(user.UserId.ToString(), user);
+            Update(user.UserId, user);
 
             return "User Blocked: " + blocked.Name;
         }
@@ -78,9 +79,9 @@ namespace DABAssignment3.Services
             var user = FindByName(UserName);
             var subscribe = FindByName(subscribeName);
 
-            user.SubscriberId.Remove(subscribe.UserId.ToString());
+            user.SubscriberId.Remove(subscribe.UserId);
 
-            Update(user.UserId.ToString(), user);
+            Update(user.UserId, user);
 
             return "UnSubscribered to User: " + subscribe.Name;
         }
@@ -90,9 +91,9 @@ namespace DABAssignment3.Services
             var user = FindByName(UserName);
             var blocked = FindByName(BlockUser);
 
-            user.BlockedUserId.Remove(blocked.UserId.ToString());
+            user.BlockedUserId.Remove(blocked.UserId);
 
-            Update(user.UserId.ToString(), user);
+            Update(user.UserId, user);
 
             return "User UnBlocked: " + blocked.Name;
         }

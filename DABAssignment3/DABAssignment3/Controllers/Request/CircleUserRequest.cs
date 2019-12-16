@@ -6,12 +6,10 @@ using MongoDB.Bson;
 
 namespace DABAssignment3.Controllers.Request
 {
-    public class UserRequest
+    public class CircleUserRequest
     {
-        public string Name { get; set; }
+        public string CircleId { get; set; }
 
-        public int Age { get; set; }
-
-        public string Gender { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
 using DABAssignment3.Models.SocialnetworkSettings;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace DABAssignment3.Services
@@ -11,6 +12,7 @@ namespace DABAssignment3.Services
     public class CommentService : ICommentService
     {
         private readonly IMongoCollection<Comment> _comment;
+
         public CommentService(ISocialnetworkDBsettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
@@ -18,6 +20,7 @@ namespace DABAssignment3.Services
 
             _comment = database.GetCollection<Comment>(settings.CommentCollectionName);
         }
+
         public List<Comment> GetAll()
         {
             return _comment.Find(book => true).ToList();
@@ -25,7 +28,7 @@ namespace DABAssignment3.Services
 
         public Comment Get(string Id)
         {
-            return _comment.Find<Comment>(comment => comment.CommentId.ToString() == Id).FirstOrDefault();
+            return _comment.Find<Comment>(comment => comment.CommentId == Id).FirstOrDefault();
         }
 
         public Comment Create(Comment Comment)
@@ -36,7 +39,7 @@ namespace DABAssignment3.Services
 
         public void Update(string id, Comment Comment)
         {
-            _comment.ReplaceOne(comment => comment.CommentId.ToString() == id, Comment);
+            _comment.ReplaceOne(comment => comment.CommentId == id, Comment);
         }
 
         public void Remove(Comment Comment)
@@ -46,7 +49,7 @@ namespace DABAssignment3.Services
 
         public void Remove(string id)
         {
-            _comment.DeleteOne(comment => comment.CommentId.ToString() == id);
+            _comment.DeleteOne(comment => comment.CommentId == id);
         }
     }
 }

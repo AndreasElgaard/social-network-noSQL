@@ -7,6 +7,7 @@ using DABAssignment3.Models;
 using DABAssignment3.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace DABAssignment3.Controllers
 {
@@ -17,7 +18,7 @@ namespace DABAssignment3.Controllers
         private readonly IPostService _postservice;
         private readonly IMapper _mapper;
 
-        public PostController(PostService postService, IMapper mapper)
+        public PostController(IPostService postService, IMapper mapper)
         {
             _postservice = postService;
             _mapper = mapper;

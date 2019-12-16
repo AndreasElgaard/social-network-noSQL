@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DABAssignment3.Models;
+using MongoDB.Bson;
 
 namespace DABAssignment3.Services
 {
