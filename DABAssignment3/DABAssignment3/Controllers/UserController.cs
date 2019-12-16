@@ -173,6 +173,7 @@ namespace DABAssignment3.Controllers
         [HttpGet("Feed")]
         public IActionResult Feed(string Username)
         {
+
             var _feed = new FeedResponse();
             var userFeed = _userservice.FindByName(Username);
 
@@ -189,7 +190,6 @@ namespace DABAssignment3.Controllers
                 _feed.FeedResponses.Add(_mapper.Map<PostResponse>(posts));
             }
 
-
             if (userFeed.SubscriberId != null)
             {
                 foreach (var subId in userFeed.SubscriberId)
@@ -199,16 +199,28 @@ namespace DABAssignment3.Controllers
                     {
                         continue;
                     }
-                    
-                    foreach (var circleId in provider.CircleId)
+
+                    foreach (var postid in provider.PostId)
                     {
-                        var circle = _circleService.Get(circleId);
+                        var subposts = _postService.Get(postid);
 
-
+                        if (subposts.Public)
+                        {
+                            _feed.FeedResponses.Add(_mapper.Map<PostResponse>(subposts));
+                        }
                     }
-                        
-                        
-                    
+                }
+            }
+
+            foreach (var circleid in userFeed.CircleId)
+            {
+                var circle = _circleService.Get(circleid);
+
+                foreach (var postid in circle.PostId)
+                {
+                    var circleposts = _postService.Get(postid);
+
+                    _feed.FeedResponses.Add(_mapper.Map<PostResponse>(circleposts));
                 }
             }
 
@@ -243,9 +255,6 @@ namespace DABAssignment3.Controllers
             //u1.CircleId.Add(circle3.CircleId);
             //u2.CircleId.Add(circle3.CircleId);
             //u3.CircleId.Add(circle3.CircleId);
-
-            u1.BlockedUserId.Add(u5.UserId);
-            u1.SubscriberId.Add(u3.UserId);
 
             _userservice.Create(u1);
             _userservice.Create(u2);
