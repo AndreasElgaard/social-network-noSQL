@@ -1,6 +1,4 @@
-# Social Network
-
-This project was implemented to get familira with noSQL. 
+# Social Network using noSQL
 
 It is a social network where a user can choose to follow another user.
 Furthermore a user can create ‘circles’ of users of which the user can share update, as a extra
